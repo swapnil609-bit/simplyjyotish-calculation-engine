@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from simplyjyotish_engine.models.advanced import AshtakavargaResult
 from simplyjyotish_engine.models.chart import BirthChart
+from simplyjyotish_engine.models.validation import ValidationStatus
 
 CONTRIBUTORS = ("sun", "moon", "mars", "mercury", "jupiter", "venus", "saturn", "lagna")
 TARGETS = CONTRIBUTORS
@@ -195,4 +196,13 @@ def calculate_ashtakavarga(chart: BirthChart) -> AshtakavargaResult:
                 "planetary multipliers"
             ),
         },
+        validation_detail=ValidationStatus(
+            source_verified=True,
+            cross_implementation_verified=False,
+            source_reference_ids=("bphs_chapter_12", "pyjhora_4_8_7_chart_7"),
+            notes=(
+                "SAV/BAV tables are pinned; Shodhya Pinda source examples include "
+                "a book-calculator discrepancy.",
+            ),
+        ),
     )

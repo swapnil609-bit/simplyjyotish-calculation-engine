@@ -23,15 +23,25 @@ boundary is recorded as a convention discrepancy rather than hidden.
 
 The independent validation catalog is `tests/fixtures/validation_reference_catalog.json`.
 Each record preserves source, edition/software version, settings, ayanamsa,
-node method, expected result, permitted tolerance, and the flags
+node method, house method where applicable, expected result, permitted
+tolerance, and the five separate status flags `implemented`, `unit_tested`,
 `source_verified`, `cross_implementation_verified`, and `expert_reviewed`.
 Published examples and pinned PyJHora 4.8.7 results are evidence records only;
 they are never generated from the engine under test. Mismatches remain visible
 and are not silently used to tune formulas.
 
-The current catalog covers all six VP Jain Shadbala component arrays, totals,
-Bhava Bala, Ishta Phala, Vimsopaka variants, Ashtakavarga/SAV and Shodhya
-Pinda, Yogini/Ashtottari comparison provenance, and explicit extended-varga
-status. Current-engine achieved-value comparison is still marked pending where
-the implementation is intentionally provisional; the independent expected
-values are preserved and are not replaced with engine-generated fixtures.
+The validation-closure catalog covers all six VP Jain Shadbala components and
+totals, Bhava Bala, Ishta/Kashta, all pinned Vimsopaka variants, Bhava Chalit,
+Yogini and Ashtottari periods/eligibility, BAV/PAV/SAV, both Shodhana methods,
+Shodhya Pinda, D5/D6/D8/D11, and convention-sensitive special Lagnas,
+Upagrahas, Arudha, Pushkara and Avastha availability. Executable regression
+tests compare every directly comparable numeric field and assert that known
+mismatches are present in `docs/VALIDATION_DISCREPANCIES.md` and
+`tests/fixtures/validation_discrepancies.json`. A reference-unavailable field
+is recorded as such; it is never replaced with an engine-generated expected
+value.
+
+The discrepancy register is normative for this milestone. A mismatch is
+closed only by identical settings and independent evidence, or by a separately
+versioned convention. Jagannatha Hora comparison remains open because its
+executable or exported reports are not present in this workspace.

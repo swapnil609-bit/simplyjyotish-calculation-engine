@@ -8,6 +8,8 @@ class ValidationStatus(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    implemented: bool = True
+    unit_tested: bool = True
     source_verified: bool = False
     cross_implementation_verified: bool = False
     expert_reviewed: bool = False

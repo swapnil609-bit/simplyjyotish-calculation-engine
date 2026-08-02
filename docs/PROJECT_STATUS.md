@@ -2,55 +2,52 @@
 
 Status date: 2026-08-02  
 Runtime: Python 3.12.10  
-Repository state at phase start: clean  
-Last completed milestone commit: `831a5e9`
+Accepted baseline commit: `5d64904`
+Current milestone: Validation Closure (validation-only; no new calculation families)
 
-## Completed and green
+## Scope completed in this milestone
 
-- Swiss Ephemeris Python 3.12 build through Visual Studio Build Tools 2022.
-- BPHS Parashari Shodashavarga default scheme:
-  `parashara_bphs_chapter_6_v1`.
-- Vimshottari Mahadasha through Prana.
-- 437-test suite, Ruff, and mypy passing after the current implementation pass.
+- Added independent reference records for Shadbala and all six components,
+  Bhava Bala, Ishta/Kashta, Vimsopaka variants, Bhava Chalit, Yogini,
+  Ashtottari and eligibility, Ashtakavarga tables and Shodhana/Pinda, extended
+  D5/D6/D8/D11, and convention-sensitive special points.
+- Preserved exact source locations, editions/software versions, settings,
+  ayanamsa, node and house methods, expected values, tolerances, and the five
+  independent validation statuses.
+- Added executable component-level comparisons and negative/schema tests.
+- Added a discrepancy register for formula, anchoring, house-method,
+  book-versus-calculator, convention, and unavailable-JHora differences.
+- Kept the SimplyJyotish defaults unchanged; no formula was tuned solely for
+  parity.
 
-## Gaps identified for this phase
+## Validation status
 
-- Bhava Chalit, Yogini, and Ashtottari are implemented in the current phase.
-- These features carry explicit expert-review status because house-boundary,
-  dasha applicability, and tradition-specific subperiod conventions vary.
-- Panchanga elements and start/end endpoints are implemented.
-- Sunrise/sunset/moonrise/moonset, Rahu Kaal, Yamaganda, Gulika Kaal,
-  Abhijit, Hora, and day/night Choghadiya are implemented.
-- Transit snapshots, ingress/station timelines, and deterministic Sade Sati
-  condition flags are implemented.
-- Nighttime Choghadiya and validated regional Muhurta table overrides are
-  implemented.
-- Transit events now use coarse brackets plus tolerance-controlled bisection;
-  event outputs include configured tolerance and achieved precision.
-- Advanced relationships, Shadbala, Ashtakavarga, and explicit extended
-  D5/D6/D8/D11 methods are implemented in the current milestone.
-- Independent validation metadata is pinned in
-  `tests/fixtures/validation_reference_catalog.json`; flags are explicit and
-  mismatches are not silently tuned away.
-- Fact-only yoga and dosha/condition detectors are implemented with raw facts,
-  exceptions/cancellations, source citations, and structured validation state.
-- Birth-time sensitivity and versioned special-point primitives are implemented
-  for sampled boundary analysis, including Pushkara Navamsha, Pushkara Bhaga,
-  Vargottama, and Vaiseshikamsa classifications. Source and expert review
-  remain pending for those school-specific conventions.
+Full verification run: 453 pytest tests passed, Ruff passed, and mypy passed.
 
-## Current milestone completion
+`implemented`, `unit_tested`, `source_verified`,
+`cross_implementation_verified`, and `expert_reviewed` are tracked separately
+in the catalog and output contracts. Expert review remains pending for
+strength conventions, dasha conventions, Bhava Chalit, extended Vargas, and
+special-point conventions. Jagannatha Hora parity remains pending because no
+executable or exported report is available in the workspace.
 
-- Objective yoga and dosha/condition contracts, sensitivity analysis, special
-  points, and auxiliary classifications are implemented and tested.
-- Full validation completed: 444 tests passed, Ruff passed, mypy passed.
-- Independent expected-value catalog includes the VP Jain Shadbala arrays,
-  Bhava Bala, Ishta Phala, Vimsopaka reference values, and Ashtakavarga
-  regression metadata. Engine parity remains honestly flagged where formulas
-  are provisional.
+The independent catalog is
+`tests/fixtures/validation_reference_catalog.json`. The discrepancy register
+is `docs/VALIDATION_DISCREPANCIES.md` with machine-readable entries in
+`tests/fixtures/validation_discrepancies.json`.
 
-## Validation posture
+## Boundaries preserved
 
-Every new result will include the existing provenance plus method/version
-metadata, warnings, boundary behavior, and an `explain_calculation` object.
-No calculated fact will be converted into interpretation or prediction text.
+This repository remains a deterministic Python calculation library with CLI,
+tests, structured JSON-compatible outputs, Swiss Ephemeris, and no website,
+mobile app, REST/API server, interpretation, prediction, remedies, AI/LLM,
+accounts, payments, or external astrology API dependency.
+
+## Release assessment
+
+The validation process is technically closed for this milestone, but the
+Independent Calculation Engine is not yet a parity-complete or
+expert-reviewed release candidate for the discrepancy-registered families.
+The next milestone should close the highest-value independent parity gaps or
+prepare a versioned technical release candidate with those limitations made
+explicit.

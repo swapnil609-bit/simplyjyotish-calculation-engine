@@ -9,6 +9,8 @@ from simplyjyotish_engine.models.outputs import Provenance
 class VargaValidationStatus(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    implemented: bool = True
+    unit_tested: bool = True
     source_verified: bool
     cross_implementation_verified: bool
     expert_reviewed: bool = False

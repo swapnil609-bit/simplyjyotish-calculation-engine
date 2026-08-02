@@ -6,6 +6,7 @@ from enum import StrEnum
 from pydantic import BaseModel, ConfigDict, Field
 
 from simplyjyotish_engine.models.outputs import Provenance
+from simplyjyotish_engine.models.validation import ValidationStatus
 
 
 class DashaDepth(StrEnum):
@@ -38,6 +39,7 @@ class DashaTimeline(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     eligibility: str = "not_applicable"
     validation_status: str = "implemented_requires_expert_review"
+    validation_detail: ValidationStatus = Field(default_factory=ValidationStatus)
 
     def active_at(self, instant: datetime) -> list[DashaPeriod]:
         return sorted(

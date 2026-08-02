@@ -6,6 +6,7 @@ from decimal import Decimal
 from simplyjyotish_engine.dashas._nested import YEAR_DAYS, duration_days, expand_children
 from simplyjyotish_engine.models.chart import BirthChart
 from simplyjyotish_engine.models.dasha import DashaDepth, DashaPeriod, DashaTimeline
+from simplyjyotish_engine.models.validation import ValidationStatus
 
 YOGINI_SEQUENCE = ("moon", "sun", "jupiter", "mars", "mercury", "saturn", "venus", "rahu")
 YOGINI_YEARS = dict(
@@ -60,4 +61,13 @@ def calculate_yogini_dasha(
         periods=periods,
         warnings=["yogini_traditions_vary_in_seed_and_subperiod_direction"],
         validation_status="implemented_requires_expert_review",
+        validation_detail=ValidationStatus(
+            source_verified=True,
+            cross_implementation_verified=False,
+            source_reference_ids=("pyjhora_4_8_7_yogini_test",),
+            notes=(
+                "Reference output uses an elapsed-at-birth balance convention; "
+                "engine timeline is birth-anchored.",
+            ),
+        ),
     )

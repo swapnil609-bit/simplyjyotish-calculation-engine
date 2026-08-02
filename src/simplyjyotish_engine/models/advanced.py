@@ -95,6 +95,7 @@ class StrengthComponent(BaseModel):
     total_virupas: float
     subcomponents: dict[str, float]
     validation_status: str = "implemented_requires_expert_review"
+    validation_detail: ValidationStatus = Field(default_factory=ValidationStatus)
 
 
 class PlanetStrength(BaseModel):
@@ -108,6 +109,7 @@ class PlanetStrength(BaseModel):
     kashta_phala: float
     vimsopaka_bala: float
     validation_status: str = "implemented_requires_expert_review"
+    validation_detail: ValidationStatus = Field(default_factory=ValidationStatus)
 
 
 class BhavaStrength(BaseModel):
@@ -117,6 +119,7 @@ class BhavaStrength(BaseModel):
     bala_virupas: float
     lord: str
     validation_status: str = "implemented_requires_expert_review"
+    validation_detail: ValidationStatus = Field(default_factory=ValidationStatus)
 
 
 class ShadbalaResult(BaseModel):

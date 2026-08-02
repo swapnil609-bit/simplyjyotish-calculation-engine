@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field
 
 from simplyjyotish_engine.models.outputs import LongitudeValue, PlanetaryPosition, Provenance
+from simplyjyotish_engine.models.validation import ValidationStatus
 
 
 class SignFact(BaseModel):
@@ -93,3 +94,4 @@ class BhavaChalitChart(BaseModel):
     placements: list[BhavaChalitPlacement]
     warnings: list[str] = Field(default_factory=list)
     explain_calculation: dict[str, str]
+    validation_status: ValidationStatus = Field(default_factory=ValidationStatus)

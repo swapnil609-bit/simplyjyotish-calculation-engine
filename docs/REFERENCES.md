@@ -35,6 +35,11 @@
   identifiers in the fact detectors. The current independent comparison
   catalog is `tests/fixtures/validation_reference_catalog.json`; edition,
   settings, tolerance, and verification flags are stored with each record.
+- Validation-closure expected values, source locations, settings, tolerances,
+  and independent-status flags are catalogued in
+  `tests/fixtures/validation_reference_catalog.json`; known mismatches and
+  their resolutions are recorded in `docs/VALIDATION_DISCREPANCIES.md` and
+  `tests/fixtures/validation_discrepancies.json`.
 
 Classical Jyotish conventions will be added beside the relevant module only
 when the exact tradition and implementation rule are specified.

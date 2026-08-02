@@ -1,0 +1,13 @@
+{
+  "schema_version": "validation_discrepancy_register_v1",
+  "entries": [
+    {"id": "DISC-SHADBALA-VPJAIN-001", "family": "shadbala", "status": "documented_not_parity", "affected_fields": ["sthana", "dig", "kaala", "cheshta", "naisargika", "drik", "total", "rupas", "bhava_bala", "ishta", "kashta", "vimsopaka"]},
+    {"id": "DISC-BHAVA-CHALIT-001", "family": "bhava_chalit", "status": "separate_convention", "affected_fields": ["cusps", "placements"]},
+    {"id": "DISC-YOGINI-ANCHOR-001", "family": "yogini", "status": "separate_convention", "affected_fields": ["first_period_start", "birth_balance"]},
+    {"id": "DISC-ASHTOTTARI-ELIGIBILITY-001", "family": "ashtottari", "status": "documented_convention", "affected_fields": ["eligibility", "seed", "first_period"]},
+    {"id": "DISC-ASHTAKAVARGA-SP-001", "family": "ashtakavarga", "status": "source_discrepancy", "affected_fields": ["shodhya_pinda"]},
+    {"id": "DISC-EXTENDED-VARGA-METHODS-001", "family": "extended_vargas", "status": "explicit_method_required", "affected_fields": ["D5", "D6", "D8", "D11"]},
+    {"id": "DISC-SPECIAL-POINTS-CONVENTION-001", "family": "special_points", "status": "documented_convention", "affected_fields": ["special_lagnas", "avasthas", "upagrahas", "pushkara"]},
+    {"id": "DISC-JHORA-UNAVAILABLE-001", "family": "jhora", "status": "environment_unavailable", "affected_fields": ["all"]}
+  ]
+}

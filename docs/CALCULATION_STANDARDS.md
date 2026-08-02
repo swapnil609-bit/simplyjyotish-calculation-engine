@@ -22,5 +22,7 @@ Cazimi is flagged at an absolute separation of 1° or less.
 
 Milestone 3 uses the documented Parashari mappings for D1, D9, D10, and D60.
 Vimshottari uses the Moon's sidereal nakshatra lord, proportional first-period
-balance, nested Antardasha periods, and a fixed 365.25-day dasha year. These
+balance, a fixed 365.25-day dasha year, and depth-selectable Mahadasha,
+Antardasha, Pratyantardasha, Sookshma, and Prana timelines. Every final child
+period closes exactly on its parent endpoint to prevent rounding gaps. These
 conventions are versioned and must not be changed silently.

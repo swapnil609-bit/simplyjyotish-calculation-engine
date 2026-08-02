@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import os
+import importlib
 from typing import Any
 
 from simplyjyotish_engine.core.errors import DependencyUnavailableError
 
+swiss: Any = None
 try:
-    import swisseph as swiss
+    swiss = importlib.import_module("swisseph")
 except ImportError:  # pragma: no cover - exercised in environments without optional install
-    swiss: Any = None
+    pass
 
 
 PLANETS: dict[str, int] = {

@@ -4,11 +4,13 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from simplyjyotish_engine.models.chart import SignFact
 from simplyjyotish_engine.models.outputs import Provenance
+from simplyjyotish_engine.models.validation import ReleaseStatus
 
 
 class VargaValidationStatus(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    release_status: ReleaseStatus = ReleaseStatus.PROVISIONAL
     implemented: bool = True
     unit_tested: bool = True
     source_verified: bool

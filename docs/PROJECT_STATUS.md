@@ -3,7 +3,7 @@
 Status date: 2026-08-02  
 Runtime: Python 3.12.10  
 Accepted baseline commit: `5d64904`
-Current milestone: Validation Closure (validation-only; no new calculation families)
+Current milestone: Reference Reconciliation and v0.1.0-alpha release candidate
 
 ## Scope completed in this milestone
 
@@ -22,7 +22,12 @@ Current milestone: Validation Closure (validation-only; no new calculation famil
 
 ## Validation status
 
-Full verification run: 453 pytest tests passed, Ruff passed, and mypy passed.
+Full verification run: 455 pytest tests passed, Ruff passed, and mypy passed.
+
+The local release candidate uses package version `0.1.0a0`, engine version
+`0.1.0-alpha`, and output schema version `1.0.0`. Release classifications are
+documented in `SUPPORTED_FEATURES.md`; advanced discrepancy-registered
+families are not stable defaults.
 
 `implemented`, `unit_tested`, `source_verified`,
 `cross_implementation_verified`, and `expert_reviewed` are tracked separately
@@ -45,9 +50,7 @@ accounts, payments, or external astrology API dependency.
 
 ## Release assessment
 
-The validation process is technically closed for this milestone, but the
-Independent Calculation Engine is not yet a parity-complete or
-expert-reviewed release candidate for the discrepancy-registered families.
-The next milestone should close the highest-value independent parity gaps or
-prepare a versioned technical release candidate with those limitations made
-explicit.
+The local alpha release candidate is technically testable and reproducible but
+not parity-complete or expert-reviewed for the discrepancy-registered families.
+It is ready for local/public GitHub review only after owner approval; it has
+not been tagged, published or pushed.

@@ -9,6 +9,7 @@ build/
 *.egg-info/
 .venv/
 .venv*/
+.release-venv/
 .env
 *.py[cod]
 *.swe

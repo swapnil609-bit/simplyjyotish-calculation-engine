@@ -26,6 +26,9 @@ Each record preserves source, edition/software version, settings, ayanamsa,
 node method, house method where applicable, expected result, permitted
 tolerance, and the five separate status flags `implemented`, `unit_tested`,
 `source_verified`, `cross_implementation_verified`, and `expert_reviewed`.
+Release classification is carried separately as `stable`, `provisional`,
+`experimental`, or `excluded_from_default`; it is not inferred from expert
+review alone.
 Published examples and pinned PyJHora 4.8.7 results are evidence records only;
 they are never generated from the engine under test. Mismatches remain visible
 and are not silently used to tune formulas.

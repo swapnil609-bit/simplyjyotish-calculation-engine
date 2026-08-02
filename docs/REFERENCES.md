@@ -10,8 +10,11 @@
 - PyJHora 4.8.7, AGPL-3.0, `naturalstupid/PyJHora`, used only as a pinned
   independent development/test oracle with Lahiri ayanamsa. Its source code is
   not copied into this project.
-- Jagannatha Hora 8.0 by P.V.R. Narasimha Rao, reserved for a future manually
-  checked comparison set; no reports, text, or code are copied.
+- Jagannatha Hora 8.0 by P.V.R. Narasimha Rao, attempted as an external
+  validation reference from the official publisher page during the alpha
+  release pass. Its installer did not expose an automated report path in this
+  environment, so no JHora values are claimed or copied. Publisher page:
+  <https://www.vedicastrologer.org/jh/>.
 - B.V. Raman, *How to Judge a Horoscope*, is reserved as a secondary
   comparison source for dasha and bhava conventions.
 - PyJHora 4.8.7 `horoscope/dhasa/graha/yogini.py` and `ashtottari.py` are the

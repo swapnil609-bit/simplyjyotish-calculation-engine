@@ -5,7 +5,10 @@ from pathlib import Path
 
 from simplyjyotish_engine.charts.bhava import calculate_bhava_chalit
 from simplyjyotish_engine.models.inputs import BirthDetails
+from simplyjyotish_engine.special_points import calculate_upagrahas
 from simplyjyotish_engine.strengths.calculator import calculate_shadbala
+from simplyjyotish_engine.vargas.extended import calculate_extended_varga
+from simplyjyotish_engine.vargas.framework import calculate_varga
 from simplyjyotish_engine.vedic.chart import calculate_birth_chart
 
 CATALOG = json.loads(Path("tests/fixtures/validation_reference_catalog.json").read_text())
@@ -70,7 +73,7 @@ def test_vp_jain_shadbala_comparison_executes_all_six_components() -> None:
     assert len(comparisons) == 49
     assert not all(comparisons)
     assert "DISC-SHADBALA-VPJAIN-001" in _discrepancy_ids()
-    assert result.validation_status.source_verified
+    assert not result.validation_status.source_verified
     assert not result.validation_status.cross_implementation_verified
 
 
@@ -117,3 +120,31 @@ def test_bhava_chalit_comparison_keeps_house_methods_separate() -> None:
     assert result.method_id == "equal_from_ascendant_v1"
     assert record["settings"]["house_method"] == "bhava_madhya_method_1"
     assert "DISC-BHAVA-CHALIT-001" in _discrepancy_ids()
+
+
+def test_special_point_reference_uses_exact_engine_identifiers() -> None:
+    reference = _record("pyjhora_special_lagnas_upagrahas_chennai_1996_v1")
+    birth = BirthDetails(
+        date_of_birth=datetime(1996, 12, 7).date(),
+        local_time_of_birth=datetime(1996, 12, 7, 10, 34),
+        timezone_name="Asia/Kolkata",
+        latitude=13.0878,
+        longitude=80.2785,
+    )
+    result = calculate_upagrahas(calculate_birth_chart(birth), birth)
+    expected_ids = set(reference["expected_result"]["solar_upagrahas"])
+    achieved_ids = {
+        point.point_id for point in result.points if point.point_id not in {"gulika", "mandi"}
+    }
+    assert expected_ids == achieved_ids
+    assert "indrachapa" in achieved_ids
+    assert "indrachaapa" not in achieved_ids
+    assert "DISC-SPECIAL-POINTS-NAME-001" in _discrepancy_ids()
+
+
+def test_release_status_and_output_schema_are_explicit() -> None:
+    chart = _vp_jain_chart()
+    assert chart.provenance.output_schema_version == "1.0.0"
+    assert calculate_varga(chart, 9).validation_status.release_status == "stable"
+    assert calculate_extended_varga(chart, 5).validation_status.release_status == "experimental"
+    assert calculate_shadbala(chart).validation_status.release_status == "experimental"

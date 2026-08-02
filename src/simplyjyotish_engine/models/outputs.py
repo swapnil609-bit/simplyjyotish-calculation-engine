@@ -4,7 +4,11 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from simplyjyotish_engine.core.constants import CALCULATION_STANDARD_VERSION, ENGINE_VERSION
+from simplyjyotish_engine.core.constants import (
+    CALCULATION_STANDARD_VERSION,
+    ENGINE_VERSION,
+    OUTPUT_SCHEMA_VERSION,
+)
 from simplyjyotish_engine.models.inputs import Ayanamsa, NodeType, Zodiac
 
 
@@ -13,6 +17,7 @@ class Provenance(BaseModel):
 
     engine_version: str = ENGINE_VERSION
     calculation_standard_version: str = CALCULATION_STANDARD_VERSION
+    output_schema_version: str = OUTPUT_SCHEMA_VERSION
     ephemeris_mode: str
     ephemeris_file_version_when_known: str | None = None
     ayanamsa: Ayanamsa

@@ -7,7 +7,7 @@ from simplyjyotish_engine.models.chart import (
     HouseFact,
 )
 from simplyjyotish_engine.models.outputs import LongitudeValue
-from simplyjyotish_engine.models.validation import ValidationStatus
+from simplyjyotish_engine.models.validation import ReleaseStatus, ValidationStatus
 from simplyjyotish_engine.vedic.reference import sign_fact, sign_index
 
 
@@ -74,6 +74,7 @@ def calculate_bhava_chalit(
             "scope": "No Sripati, quadrant, or unequal-house interpretation is implied",
         },
         validation_status=ValidationStatus(
+            release_status=ReleaseStatus.PROVISIONAL,
             source_verified=True,
             cross_implementation_verified=False,
             source_reference_ids=("pyjhora_bhava_madhya_reference",),

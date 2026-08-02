@@ -1,0 +1,23 @@
+{
+  "provenance": {
+    "engine_version": "0.1.0-alpha",
+    "calculation_standard_version": "1.0.0",
+    "output_schema_version": "1.0.0",
+    "ayanamsa": "lahiri",
+    "node_type": "true",
+    "zodiac": "sidereal",
+    "source_input_timezone": "Asia/Kolkata",
+    "resolved_utc": "1990-01-01T07:00:15Z"
+  },
+  "ascendant": {
+    "longitude": {
+      "decimal_degrees": 354.0902491419092
+    },
+    "sign": {
+      "index": 11,
+      "name": "Pisces",
+      "lord": "jupiter"
+    }
+  },
+  "contract": "Full output includes houses, planets, warnings and explain_calculation."
+}

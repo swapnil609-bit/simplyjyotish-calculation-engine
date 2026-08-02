@@ -17,7 +17,7 @@ from simplyjyotish_engine.models.special import (
     VargaClassificationFact,
     VargaClassificationResult,
 )
-from simplyjyotish_engine.models.validation import ValidationStatus
+from simplyjyotish_engine.models.validation import ReleaseStatus, ValidationStatus
 from simplyjyotish_engine.panchanga.daily import calculate_panchanga
 from simplyjyotish_engine.vargas.framework import calculate_varga
 
@@ -37,6 +37,7 @@ CLASSICAL_KARAKA_PLANETS = {
 
 def _status(*notes: str) -> ValidationStatus:
     return ValidationStatus(
+        release_status=ReleaseStatus.EXPERIMENTAL,
         source_verified=True,
         cross_implementation_verified=False,
         source_reference_ids=("bphs_special_points_v1",),

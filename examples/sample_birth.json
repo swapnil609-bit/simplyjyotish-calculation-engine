@@ -1,0 +1,9 @@
+{
+  "date_of_birth": "1990-01-01",
+  "local_time_of_birth": "1990-01-01T12:30:15",
+  "timezone_name": "Asia/Kolkata",
+  "latitude": 17.385,
+  "longitude": 78.4867,
+  "place_label": "Hyderabad, India",
+  "birth_time_accuracy": "exact"
+}

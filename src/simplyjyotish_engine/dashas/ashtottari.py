@@ -6,7 +6,7 @@ from decimal import Decimal
 from simplyjyotish_engine.dashas._nested import YEAR_DAYS, duration_days, expand_children
 from simplyjyotish_engine.models.chart import BirthChart
 from simplyjyotish_engine.models.dasha import DashaDepth, DashaPeriod, DashaTimeline
-from simplyjyotish_engine.models.validation import ValidationStatus
+from simplyjyotish_engine.models.validation import ReleaseStatus, ValidationStatus
 
 ASHTOTTARI_SEQUENCE = ("sun", "moon", "mars", "mercury", "saturn", "jupiter", "rahu", "venus")
 ASHTOTTARI_YEARS = dict(
@@ -108,6 +108,7 @@ def calculate_ashtottari_dasha(
         eligibility="applicable" if applicable else "not_applicable",
         validation_status="implemented_requires_expert_review",
         validation_detail=ValidationStatus(
+            release_status=ReleaseStatus.PROVISIONAL,
             source_verified=True,
             cross_implementation_verified=False,
             source_reference_ids=("bphs_chapter_17_3", "pyjhora_4_8_7_ashtottari_tests"),

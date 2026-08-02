@@ -3,6 +3,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 from simplyjyotish_engine.models.chart import BirthChart
+from simplyjyotish_engine.models.validation import ReleaseStatus
 from simplyjyotish_engine.models.varga import DivisionalChart, VargaPlanet, VargaValidationStatus
 from simplyjyotish_engine.vedic.reference import sign_fact
 
@@ -76,6 +77,7 @@ def calculate_extended_varga(
         boundary_convention="Start-inclusive, end-exclusive; Decimal longitude partitioning",
         convention=convention,
         validation_status=VargaValidationStatus(
+            release_status=ReleaseStatus.EXPERIMENTAL,
             source_verified=False, cross_implementation_verified=False, expert_reviewed=False
         ),
         provenance=chart.provenance,

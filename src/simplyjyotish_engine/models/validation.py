@@ -1,6 +1,15 @@
 from __future__ import annotations
 
+from enum import StrEnum
+
 from pydantic import BaseModel, ConfigDict, Field
+
+
+class ReleaseStatus(StrEnum):
+    STABLE = "stable"
+    PROVISIONAL = "provisional"
+    EXPERIMENTAL = "experimental"
+    EXCLUDED_FROM_DEFAULT = "excluded_from_default"
 
 
 class ValidationStatus(BaseModel):
@@ -8,6 +17,7 @@ class ValidationStatus(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    release_status: ReleaseStatus = ReleaseStatus.PROVISIONAL
     implemented: bool = True
     unit_tested: bool = True
     source_verified: bool = False

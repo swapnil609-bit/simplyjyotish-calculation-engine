@@ -10,7 +10,7 @@ from simplyjyotish_engine.models.advanced import (
     StrengthComponent,
 )
 from simplyjyotish_engine.models.chart import BirthChart
-from simplyjyotish_engine.models.validation import ValidationStatus
+from simplyjyotish_engine.models.validation import ReleaseStatus, ValidationStatus
 from simplyjyotish_engine.vargas.framework import calculate_varga
 from simplyjyotish_engine.vedic.dignity import EXALTATION, OWN_SIGNS
 
@@ -226,9 +226,13 @@ def calculate_shadbala(chart: BirthChart) -> ShadbalaResult:
             "vimsopaka": "equal weighted dignity score across ten configured vargas",
         },
         validation_status=ValidationStatus(
-            source_verified=True,
+            release_status=ReleaseStatus.EXPERIMENTAL,
+            source_verified=False,
             cross_implementation_verified=False,
             source_reference_ids=("bphs_chapter_26", "pyjhora_4_8_7_vp_jain"),
-            notes=("Provisional component formulas are retained without parity tuning.",),
+            notes=(
+                "Provisional component formulas are retained without parity tuning; "
+                "source verification is pending identical formula/configuration mapping.",
+            ),
         ),
     )

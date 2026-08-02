@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from decimal import Decimal
 
+from simplyjyotish_engine.models.validation import ReleaseStatus
 from simplyjyotish_engine.models.varga import VargaValidationStatus
 
 PARASHARA_SHODASHAVARGA_SCHEME_ID = "parashara_bphs_chapter_6_v1"
@@ -210,6 +211,7 @@ def d60_name(source_sign: int, part: int) -> str:
 
 def validation_status() -> VargaValidationStatus:
     return VargaValidationStatus(
+        release_status=ReleaseStatus.STABLE,
         source_verified=True,
         cross_implementation_verified=True,
         expert_reviewed=False,

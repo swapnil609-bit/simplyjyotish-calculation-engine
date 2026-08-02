@@ -35,6 +35,9 @@ def test_validation_catalog_contains_independent_source_metadata() -> None:
         assert "permitted_tolerance" in record
         assert status_fields <= record.keys()
         assert all(isinstance(record[field], bool) for field in status_fields)
+        assert record["release_status"] in {
+            "stable", "provisional", "experimental", "excluded_from_default"
+        }
         assert record.get("covered_families")
 
 
@@ -91,7 +94,8 @@ def test_dasha_fixture_preserves_prebirth_reference_and_engine_anchor_as_distinc
 
 
 def test_known_mismatches_are_registered_and_not_silently_tuned() -> None:
-    discrepancy_ids = {item["id"] for item in _discrepancies()["entries"]}
+    entries = _discrepancies()["entries"]
+    discrepancy_ids = {item["id"] for item in entries}
     assert {
         "DISC-SHADBALA-VPJAIN-001",
         "DISC-BHAVA-CHALIT-001",
@@ -100,8 +104,11 @@ def test_known_mismatches_are_registered_and_not_silently_tuned() -> None:
         "DISC-ASHTAKAVARGA-SP-001",
         "DISC-EXTENDED-VARGA-METHODS-001",
         "DISC-SPECIAL-POINTS-CONVENTION-001",
+        "DISC-SPECIAL-POINTS-NAME-001",
         "DISC-JHORA-UNAVAILABLE-001",
     } <= discrepancy_ids
+    assert {item["classification"] for item in entries} <= {"A", "B", "C", "D", "E"}
+    assert {item["classification"] for item in entries} >= {"B", "C", "D", "E"}
 
 
 @pytest.mark.parametrize(

@@ -12,12 +12,14 @@ math.
 
 ## Development
 
-Python 3.12+ and `uv` are recommended. On Windows, `pyswisseph` may require
-MSVC Build Tools because its current release may not provide a Python 3.12
-wheel. Install with `uv sync --extra dev`,
-then run `uv run pytest` and `uv run simplyjyotish --help`. Swiss Ephemeris
-data can be supplied with `SE_EPHE_PATH`; the engine reports its selected
-ephemeris mode in every result.
+Python 3.12+ is required. On Windows, `pyswisseph` may require MSVC Build
+Tools because its current release may not provide a Python 3.12 wheel. A
+reproducible pip setup is documented in `examples/README.md` and pinned in
+`requirements-lock.txt`. Run `python -m pytest`,
+`python -m simplyjyotish --help`, `python -m ruff check src tests`, and
+`python -m mypy src`. Swiss Ephemeris data can be supplied with
+`SE_EPHE_PATH`; the engine reports its selected ephemeris mode in every
+result.
 
 The default divisional-chart scheme is the documented BPHS Chapter 6 Parashari
 Shodashavarga baseline. Its conventions, source references, and validation
@@ -28,3 +30,7 @@ The project is AGPL-3.0-or-later. Read `LICENSING_STRATEGY.md` before using
 Swiss Ephemeris in proprietary software. Astronomical precision does not make
 life predictions scientifically certain; this project returns calculations,
 not conclusions about a person's life.
+
+The local alpha release classification and limitations are in
+`RELEASE_READINESS.md`, `SUPPORTED_FEATURES.md`, `KNOWN_LIMITATIONS.md`, and
+`VALIDATION_REPORT.md`.

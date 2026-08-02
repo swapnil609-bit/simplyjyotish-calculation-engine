@@ -51,22 +51,36 @@ def _event_time(request: TransitRequest, local: datetime) -> tuple[datetime, dat
     return utc, utc.astimezone(resolve_timezone(request.timezone_name))
 
 
-def _locate_change(
-    left: datetime, right: datetime, predicate: Callable[[datetime], bool]
-) -> datetime:
-    left_state = predicate(left)
-    for _ in range(42):
+def _refine_root(
+    left: datetime,
+    right: datetime,
+    function: Callable[[datetime], float],
+    tolerance_seconds: float,
+) -> tuple[datetime, float]:
+    left_value = function(left)
+    right_value = function(right)
+    if abs(left_value) <= 1e-12:
+        return left, tolerance_seconds
+    if abs(right_value) <= 1e-12:
+        return right, tolerance_seconds
+    if left_value * right_value > 0:
+        raise ValueError("root refinement requires a bracket with opposite signs")
+    while (right - left).total_seconds() > tolerance_seconds:
         middle = left + (right - left) / 2
-        if predicate(middle) == left_state:
-            left = middle
+        middle_value = function(middle)
+        if left_value * middle_value <= 0:
+            right, right_value = middle, middle_value
         else:
-            right = middle
-    return left + (right - left) / 2
+            left, left_value = middle, middle_value
+    return left + (right - left) / 2, (right - left).total_seconds()
 
 
-def calculate_transit_timeline(request: TransitRequest, sample_hours: int = 24) -> TransitTimeline:
-    if sample_hours < 1 or sample_hours > 24:
-        raise ValueError("sample_hours must be between 1 and 24")
+def calculate_transit_timeline(
+    request: TransitRequest, sample_hours: int | None = None
+) -> TransitTimeline:
+    coarse_hours = request.coarse_step_hours if sample_hours is None else sample_hours
+    if coarse_hours < 1 or coarse_hours > 168:
+        raise ValueError("sample_hours must be between 1 and 168")
     zone = resolve_timezone(request.timezone_name)
     start = datetime.combine(request.start_date, time(0), tzinfo=zone)
     end = datetime.combine(request.end_date + timedelta(days=1), time(0), tzinfo=zone)
@@ -79,7 +93,9 @@ def calculate_transit_timeline(request: TransitRequest, sample_hours: int = 24) 
         snapshots.append(
             TransitSnapshot(instant_utc=utc, local_time=cursor, points=list(points.values()))
         )
-        cursor += timedelta(hours=sample_hours)
+        if cursor == end:
+            break
+        cursor = min(cursor + timedelta(hours=coarse_hours), end)
     events: list[TransitEvent] = []
     for previous, current in pairwise(samples):
         left_local, left_points = previous
@@ -89,14 +105,40 @@ def calculate_transit_timeline(request: TransitRequest, sample_hours: int = 24) 
                 continue
             left_point, right_point = left_points[planet], right_points[planet]
             if left_point.sign_index != right_point.sign_index:
-                target_sign = left_point.sign_index
+                direct = (
+                    (right_point.longitude_degrees - left_point.longitude_degrees) % 360
+                ) < 180
+                if direct:
+                    target = (left_point.sign_index + 1) * 30.0
+                    target_distance = (target - left_point.longitude_degrees) % 360
 
-                def sign_unchanged(
-                    moment: datetime, planet_name: str = planet, target: int = target_sign
-                ) -> bool:
-                    return _sample(request, moment)[1][planet_name].sign_index == target
+                    def ingress_function(
+                        moment: datetime,
+                        planet_name: str = planet,
+                        reference: float = left_point.longitude_degrees,
+                        distance: float = target_distance,
+                    ) -> float:
+                        longitude = _sample(request, moment)[1][planet_name].longitude_degrees
+                        return ((longitude - reference) % 360) - distance
+                else:
+                    target = left_point.sign_index * 30.0
+                    target_distance = (left_point.longitude_degrees - target) % 360
 
-                event_local = _locate_change(left_local, right_local, sign_unchanged)
+                    def ingress_function(
+                        moment: datetime,
+                        planet_name: str = planet,
+                        reference: float = left_point.longitude_degrees,
+                        distance: float = target_distance,
+                    ) -> float:
+                        longitude = _sample(request, moment)[1][planet_name].longitude_degrees
+                        return ((reference - longitude) % 360) - distance
+
+                event_local, precision = _refine_root(
+                    left_local,
+                    right_local,
+                    ingress_function,
+                    request.event_tolerance_seconds,
+                )
                 utc, local = _event_time(request, event_local)
                 events.append(
                     TransitEvent(
@@ -106,22 +148,25 @@ def calculate_transit_timeline(request: TransitRequest, sample_hours: int = 24) 
                         local_time=local,
                         from_sign_index=left_point.sign_index,
                         to_sign_index=right_point.sign_index,
-                        direction="retrograde"
-                        if right_point.longitude_degrees < left_point.longitude_degrees
-                        else "direct",
+                        direction="direct" if direct else "retrograde",
+                        configured_tolerance_seconds=request.event_tolerance_seconds,
+                        achieved_precision_seconds=precision,
+                        refinement_method="bracketed_bisection_on_unwrapped_longitude",
+                        search_window_start_utc=left_local.astimezone(UTC),
+                        search_window_end_utc=right_local.astimezone(UTC),
                     )
                 )
             if left_point.retrograde != right_point.retrograde:
-                target_retrograde = left_point.retrograde
 
-                def direction_unchanged(
-                    moment: datetime,
-                    planet_name: str = planet,
-                    target: bool = target_retrograde,
-                ) -> bool:
-                    return _sample(request, moment)[1][planet_name].retrograde == target
+                def station_function(moment: datetime, planet_name: str = planet) -> float:
+                    return _sample(request, moment)[1][planet_name].speed_longitude_degrees_per_day
 
-                event_local = _locate_change(left_local, right_local, direction_unchanged)
+                event_local, precision = _refine_root(
+                    left_local,
+                    right_local,
+                    station_function,
+                    request.event_tolerance_seconds,
+                )
                 utc, local = _event_time(request, event_local)
                 events.append(
                     TransitEvent(
@@ -132,25 +177,27 @@ def calculate_transit_timeline(request: TransitRequest, sample_hours: int = 24) 
                         instant_utc=utc,
                         local_time=local,
                         direction="retrograde" if not left_point.retrograde else "direct",
+                        configured_tolerance_seconds=request.event_tolerance_seconds,
+                        achieved_precision_seconds=precision,
+                        refinement_method="bracketed_bisection_on_longitude_speed",
+                        search_window_start_utc=left_local.astimezone(UTC),
+                        search_window_end_utc=right_local.astimezone(UTC),
                     )
                 )
-    first_utc, first_points = samples[0]
     first_result = calculate_planetary_positions(_birth_at(request, start.replace(tzinfo=None)))
     return TransitTimeline(
         provenance=first_result.provenance,
         snapshots=snapshots,
         events=sorted(events, key=lambda item: item.instant_utc),
         warnings=[
-            "event detection resolution is controlled by sample_hours",
-            "station and ingress boundaries are refined by bisection",
+            "coarse sampling locates a bracket; event accuracy is set by event_tolerance_seconds",
+            "station and ingress boundaries are refined by numerical bisection",
         ],
         explain_calculation={
             "positions": (
                 "Swiss Ephemeris calc_ut with the request zodiac, ayanamsa, and node settings"
             ),
-            "ingress": (
-                "sign-index changes detected on a fixed sample grid and refined by bisection"
-            ),
+            "ingress": "unwrapped longitude reaches a sign boundary inside a coarse bracket",
             "retrograde": "speed-longitude sign changes exposed as station events",
         },
     )

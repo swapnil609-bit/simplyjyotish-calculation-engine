@@ -39,8 +39,8 @@ class TimeWindow(BaseModel):
 class DailyWindows(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    sunrise: EventTime
-    sunset: EventTime
+    sunrise: EventTime | None
+    sunset: EventTime | None
     moonrise: EventTime | None = None
     moonset: EventTime | None = None
     rahu_kaal: TimeWindow
@@ -48,6 +48,8 @@ class DailyWindows(BaseModel):
     gulika_kaal: TimeWindow
     abhijit_muhurta: TimeWindow
     hora: list[TimeWindow]
+    choghadiya_day: list[TimeWindow]
+    choghadiya_night: list[TimeWindow]
     choghadiya: list[TimeWindow]
 
 
@@ -60,7 +62,7 @@ class PanchangaResult(BaseModel):
     nakshatra: PanchangaElement
     yoga: PanchangaElement
     karana: PanchangaElement
-    windows: DailyWindows
+    windows: DailyWindows | None
     warnings: list[str] = Field(default_factory=list)
     explain_calculation: dict[str, str]
 
@@ -94,6 +96,11 @@ class TransitEvent(BaseModel):
     from_sign_index: int | None = Field(default=None, ge=0, le=11)
     to_sign_index: int | None = Field(default=None, ge=0, le=11)
     direction: str | None = None
+    configured_tolerance_seconds: float = Field(gt=0)
+    achieved_precision_seconds: float = Field(gt=0)
+    refinement_method: str
+    search_window_start_utc: datetime
+    search_window_end_utc: datetime
     validation_status: str = "implemented_requires_expert_review"
 
 

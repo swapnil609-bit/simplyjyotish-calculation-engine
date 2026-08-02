@@ -84,6 +84,15 @@ CHOGHADIYA = (
     ("Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal"),
     ("Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg"),
 )
+CHOGHADIYA_NIGHT = (
+    ("Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh"),
+    ("Char", "Rog", "Kaal", "Labh", "Udveg", "Amrit", "Shubh", "Char"),
+    ("Kaal", "Labh", "Udveg", "Amrit", "Shubh", "Rog", "Char", "Kaal"),
+    ("Udveg", "Amrit", "Shubh", "Rog", "Kaal", "Char", "Labh", "Udveg"),
+    ("Labh", "Udveg", "Rog", "Kaal", "Char", "Amrit", "Shubh", "Labh"),
+    ("Rog", "Kaal", "Char", "Amrit", "Udveg", "Shubh", "Labh", "Rog"),
+    ("Amrit", "Shubh", "Rog", "Char", "Labh", "Udveg", "Kaal", "Amrit"),
+)
 
 
 def _birth_at_midnight(location: LocationDate) -> BirthDetails:
@@ -249,13 +258,23 @@ def _daily_windows(
             lord = HORA_LORDS[(DAY_LORDS.index(DAY_LORDS[weekday]) + i) % 7]
             end = night_start + (night_end - night_start) * (j + 1) / 12
         hora.append(_window(f"hora_{lord}", start, end))
-    chog = [
+    day_table = location.muhurta.choghadiya_day_table or CHOGHADIYA
+    night_table = location.muhurta.choghadiya_night_table or CHOGHADIYA_NIGHT
+    chog_day = [
         _window(
             f"choghadiya_{name.lower()}",
             day_start + (day_end - day_start) * i / 8,
             day_start + (day_end - day_start) * (i + 1) / 8,
         )
-        for i, name in enumerate(CHOGHADIYA[weekday])
+        for i, name in enumerate(day_table[weekday])
+    ]
+    chog_night = [
+        _window(
+            f"choghadiya_{name.lower()}",
+            night_start + (night_end - night_start) * i / 8,
+            night_start + (night_end - night_start) * (i + 1) / 8,
+        )
+        for i, name in enumerate(night_table[weekday])
     ]
     return DailyWindows(
         sunrise=sunrise,
@@ -271,7 +290,9 @@ def _daily_windows(
             abhijit_center + abhijit_length / 2,
         ),
         hora=hora,
-        choghadiya=chog,
+        choghadiya_day=chog_day,
+        choghadiya_night=chog_night,
+        choghadiya=[*chog_day, *chog_night],
     )
 
 
@@ -296,14 +317,16 @@ def calculate_panchanga(location: LocationDate) -> PanchangaResult:
         karana_name = ("Shakuni", "Chatushpada", "Naga")[karana_index - 58]
     sunrise = _rise_set(location, swe.SUN, True, location.date)
     sunset = _rise_set(location, swe.SUN, False, location.date)
-    if sunrise is None or sunset is None:
-        raise ValueError("Sunrise or sunset was not found for the requested location/date")
-    windows = _daily_windows(
-        location,
-        sunrise,
-        sunset,
-        _rise_set(location, swe.MOON, True, location.date),
-        _rise_set(location, swe.MOON, False, location.date),
+    windows = (
+        _daily_windows(
+            location,
+            sunrise,
+            sunset,
+            _rise_set(location, swe.MOON, True, location.date),
+            _rise_set(location, swe.MOON, False, location.date),
+        )
+        if sunrise is not None and sunset is not None
+        else None
     )
     from simplyjyotish_engine.astronomy.positions import calculate_planetary_positions
 
@@ -319,8 +342,9 @@ def calculate_panchanga(location: LocationDate) -> PanchangaResult:
         karana=_panchanga_element(location, "karana", jd, 6.0, karana_index, karana_name),
         windows=windows,
         warnings=[
-            "muhurta_conventions_are_versioned_default_daytime_rules",
+            f"muhurta_convention:{location.muhurta.convention_id}",
             "moonrise_or_moonset_can_be_unavailable_at_extreme_latitudes",
+            "sunrise_or_sunset_unavailable_returns_windows_null",
         ],
         explain_calculation={
             "tithi": "sidereal Moon minus Sun phase divided into 30 segments of 12 degrees",

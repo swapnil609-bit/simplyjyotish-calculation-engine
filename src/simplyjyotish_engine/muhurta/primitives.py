@@ -5,6 +5,6 @@ from simplyjyotish_engine.models.inputs import LocationDate
 from simplyjyotish_engine.panchanga.daily import calculate_panchanga
 
 
-def calculate_muhurta_primitives(location: LocationDate) -> DailyWindows:
+def calculate_muhurta_primitives(location: LocationDate) -> DailyWindows | None:
     """Return deterministic daily time windows without an auspiciousness judgment."""
     return calculate_panchanga(location).windows

@@ -42,6 +42,23 @@ class CalculationSettings(BaseModel):
     ephemeris_mode: str = "swiss_ephemeris"
 
 
+class MuhurtaSettings(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    convention_id: str = "gauri_choghadiya_pyjhora_1"
+    choghadiya_day_table: tuple[tuple[str, ...], ...] | None = None
+    choghadiya_night_table: tuple[tuple[str, ...], ...] | None = None
+
+    @field_validator("choghadiya_day_table", "choghadiya_night_table")
+    @classmethod
+    def validate_choghadiya_table(
+        cls, value: tuple[tuple[str, ...], ...] | None
+    ) -> tuple[tuple[str, ...], ...] | None:
+        if value is not None and (len(value) != 7 or any(len(row) != 8 for row in value)):
+            raise ValueError("Choghadiya tables must contain seven weekday rows of eight entries")
+        return value
+
+
 class BirthDetails(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -79,6 +96,7 @@ class LocationDate(BaseModel):
     latitude: float = Field(ge=-90, le=90)
     longitude: float = Field(ge=-180, le=180)
     settings: CalculationSettings = Field(default_factory=CalculationSettings)
+    muhurta: MuhurtaSettings = Field(default_factory=MuhurtaSettings)
 
     @field_validator("timezone_name")
     @classmethod
@@ -107,6 +125,8 @@ class TransitRequest(BaseModel):
         "ketu",
     )
     settings: CalculationSettings = Field(default_factory=CalculationSettings)
+    coarse_step_hours: int = Field(default=24, ge=1, le=168)
+    event_tolerance_seconds: float = Field(default=1.0, gt=0, le=3600)
 
     @field_validator("timezone_name")
     @classmethod

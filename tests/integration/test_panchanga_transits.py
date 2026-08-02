@@ -18,7 +18,14 @@ def test_panchanga_returns_boundaries_and_daily_windows() -> None:
         assert 0 <= element.fraction_complete_at_local_midnight < 1
     assert result.windows.sunrise.instant_utc < result.windows.sunset.instant_utc
     assert len(result.windows.hora) == 24
-    assert len(result.windows.choghadiya) == 8
+    assert result.windows is not None
+    assert len(result.windows.choghadiya_day) == 8
+    assert len(result.windows.choghadiya_night) == 8
+    assert len(result.windows.choghadiya) == 16
+    assert (
+        result.windows.choghadiya_day[-1].end.instant_utc
+        == result.windows.choghadiya_night[0].start.instant_utc
+    )
 
 
 def test_transit_timeline_and_sade_sati_are_structured_and_deterministic() -> None:
@@ -44,3 +51,57 @@ def test_transit_timeline_and_sade_sati_are_structured_and_deterministic() -> No
     )
     assert len(sade.conditions) == 4
     assert all(condition.relative_sign_offset in range(12) for condition in sade.conditions)
+
+
+def test_panchanga_handles_polar_sunrise_unavailability_and_midnight_crossing() -> None:
+    polar = calculate_panchanga(
+        LocationDate(date=date(2024, 1, 1), timezone_name="UTC", latitude=69.0, longitude=0.0)
+    )
+    assert polar.windows is None
+    assert "sunrise_or_sunset_unavailable_returns_windows_null" in polar.warnings
+    location = LocationDate(
+        date=date(2024, 1, 1), timezone_name="Asia/Kolkata", latitude=17.385, longitude=78.4867
+    )
+    result = calculate_panchanga(location)
+    assert result.windows is not None
+    assert result.windows.choghadiya_night[0].start.local_time.date() == location.date
+    assert result.windows.choghadiya_night[-1].end.local_time.date() == date(2024, 1, 2)
+
+
+def test_transit_refines_endpoint_and_timezone_crossing_events() -> None:
+    utc_request = TransitRequest(
+        start_date=date(2024, 1, 14),
+        end_date=date(2024, 1, 15),
+        timezone_name="UTC",
+        latitude=0,
+        longitude=0,
+        planets=("sun",),
+        coarse_step_hours=168,
+        event_tolerance_seconds=0.5,
+    )
+    local_request = utc_request.model_copy(update={"timezone_name": "Asia/Kolkata"})
+    utc_events = calculate_transit_timeline(utc_request).events
+    local_events = calculate_transit_timeline(local_request).events
+    assert utc_events and local_events
+    assert utc_events[0].local_time.date() != local_events[0].local_time.date()
+    assert utc_events[0].achieved_precision_seconds <= 0.5
+    assert utc_events[0].search_window_start_utc <= utc_events[0].instant_utc
+    assert utc_events[0].instant_utc <= utc_events[0].search_window_end_utc
+
+
+def test_transit_detects_a_retrograde_loop_with_coarse_brackets() -> None:
+    request = TransitRequest(
+        start_date=date(2024, 4, 1),
+        end_date=date(2024, 4, 26),
+        timezone_name="UTC",
+        latitude=0,
+        longitude=0,
+        planets=("mercury",),
+        coarse_step_hours=168,
+        event_tolerance_seconds=2.0,
+    )
+    events = calculate_transit_timeline(request).events
+    assert [event.event for event in events if event.event.startswith("station_")] == [
+        "station_retrograde",
+        "station_direct",
+    ]

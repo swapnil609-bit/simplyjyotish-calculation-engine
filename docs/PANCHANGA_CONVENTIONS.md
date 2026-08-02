@@ -13,10 +13,14 @@ judgment.
   Ephemeris longitudes around local midnight.
 - Sunrise, sunset, moonrise, and moonset use Swiss Ephemeris `rise_trans` with
   the requested geographic coordinates and standard refraction behavior.
-- Rahu Kaal, Yamaganda, Gulika Kaal, Abhijit, Hora, and daytime Choghadiya use
-  the versioned weekday tables in `panchanga/daily.py`. Night Choghadiya is
-  intentionally not inferred from a daytime table.
+- Rahu Kaal, Yamaganda, Gulika Kaal, Abhijit, Hora, and day/night Choghadiya
+  use the versioned weekday tables in `panchanga/daily.py`. The default
+  `gauri_choghadiya_pyjhora_1` tables are comparison-aligned with PyJHora.
+- `LocationDate.muhurta` accepts explicit seven-row regional day/night tables;
+  the table shape is validated and the convention identifier is returned in
+  the result warnings.
 
 The weekday tables and naming conventions remain marked for practicing
 Jyotishi review because regional almanacs differ. Extreme-latitude missing
-rise/set events remain explicit rather than fabricated.
+rise/set events return `windows: null` with a warning rather than fabricated
+times.

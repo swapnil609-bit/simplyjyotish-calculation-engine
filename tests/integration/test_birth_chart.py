@@ -1,9 +1,9 @@
 from pathlib import Path
 
 from simplyjyotish_engine.models.inputs import BirthDetails
-from simplyjyotish_engine.vedic.chart import calculate_birth_chart
 from simplyjyotish_engine.vargas.framework import calculate_varga
 from simplyjyotish_engine.vargas.parashara_bphs import SHODASHAVARGA_DIVISIONS
+from simplyjyotish_engine.vedic.chart import calculate_birth_chart
 
 
 def test_birth_chart_has_ascendant_houses_and_facts() -> None:

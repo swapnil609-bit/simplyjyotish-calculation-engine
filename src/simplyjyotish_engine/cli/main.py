@@ -5,9 +5,14 @@ from typing import Annotated
 
 import typer
 
+from simplyjyotish_engine.charts.bhava import calculate_bhava_chalit
+from simplyjyotish_engine.dashas.ashtottari import calculate_ashtottari_dasha
 from simplyjyotish_engine.dashas.vimshottari import calculate_vimshottari_dasha
+from simplyjyotish_engine.dashas.yogini import calculate_yogini_dasha
 from simplyjyotish_engine.models.dasha import DashaDepth
-from simplyjyotish_engine.models.inputs import BirthDetails
+from simplyjyotish_engine.models.inputs import BirthDetails, LocationDate, TransitRequest
+from simplyjyotish_engine.panchanga.daily import calculate_panchanga
+from simplyjyotish_engine.transits.timeline import calculate_transit_timeline
 from simplyjyotish_engine.vargas.framework import calculate_varga
 from simplyjyotish_engine.vedic.chart import calculate_birth_chart
 
@@ -50,6 +55,51 @@ def dasha(
     birth = BirthDetails.model_validate_json(input.read_text(encoding="utf-8"))
     timeline = calculate_vimshottari_dasha(calculate_birth_chart(birth), max_depth=level)
     typer.echo(timeline.model_dump_json(indent=2))
+
+
+@app.command()
+def bhava(
+    input: Annotated[Path, typer.Option("--input", exists=True, readable=True)],
+) -> None:
+    """Calculate equal-from-Ascendant Bhava Chalit placements."""
+    birth = BirthDetails.model_validate_json(input.read_text(encoding="utf-8"))
+    typer.echo(calculate_bhava_chalit(calculate_birth_chart(birth)).model_dump_json(indent=2))
+
+
+@app.command()
+def dasha_family(
+    input: Annotated[Path, typer.Option("--input", exists=True, readable=True)],
+    system: Annotated[str, typer.Option("--system", help="yogini or ashtottari")],
+    level: Annotated[DashaDepth, typer.Option("--level")] = DashaDepth.ANTARDASHA,
+) -> None:
+    """Calculate a supported non-Vimshottari dasha family."""
+    birth = BirthDetails.model_validate_json(input.read_text(encoding="utf-8"))
+    chart_result = calculate_birth_chart(birth)
+    if system == "yogini":
+        timeline = calculate_yogini_dasha(chart_result, max_depth=level)
+    elif system == "ashtottari":
+        timeline = calculate_ashtottari_dasha(chart_result, max_depth=level)
+    else:
+        raise typer.BadParameter("system must be yogini or ashtottari")
+    typer.echo(timeline.model_dump_json(indent=2))
+
+
+@app.command()
+def panchang(
+    input: Annotated[Path, typer.Option("--input", exists=True, readable=True)],
+) -> None:
+    """Calculate deterministic Panchanga and daily Muhurta primitives."""
+    request = LocationDate.model_validate_json(input.read_text(encoding="utf-8"))
+    typer.echo(calculate_panchanga(request).model_dump_json(indent=2))
+
+
+@app.command()
+def transit(
+    input: Annotated[Path, typer.Option("--input", exists=True, readable=True)],
+) -> None:
+    """Calculate transit snapshots and ingress/station events."""
+    request = TransitRequest.model_validate_json(input.read_text(encoding="utf-8"))
+    typer.echo(calculate_transit_timeline(request).model_dump_json(indent=2))
 
 
 if __name__ == "__main__":

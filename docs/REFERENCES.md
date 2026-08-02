@@ -12,6 +12,15 @@
   not copied into this project.
 - Jagannatha Hora 8.0 by P.V.R. Narasimha Rao, reserved for a future manually
   checked comparison set; no reports, text, or code are copied.
+- B.V. Raman, *How to Judge a Horoscope*, is reserved as a secondary
+  comparison source for dasha and bhava conventions.
+- PyJHora 4.8.7 `horoscope/dhasa/graha/yogini.py` and `ashtottari.py` are the
+  current comparison sources for sequence, duration, and eligibility mechanics.
+- PyJHora 4.8.7 `panchanga/drik.py` is a comparison source for Panchanga,
+  rise/set, and daily time-window naming; source code is not copied.
+- Swiss Ephemeris `rise_trans`, `calc_ut`, and planetary-event documentation
+  are the primary astronomical calculation references for daily and transit
+  event timing.
 
 Classical Jyotish conventions will be added beside the relevant module only
 when the exact tradition and implementation rule are specified.

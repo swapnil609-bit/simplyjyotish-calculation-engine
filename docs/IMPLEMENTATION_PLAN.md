@@ -15,14 +15,14 @@ matrix entry before it is marked complete.
 
 ## Current phase
 
-4. Panchang, Muhurta, and transit primitives: Bhava Chalit completion,
-   remaining conservative dasha systems, Panchang elements and endpoints,
-   daily time windows, ingress/station/event timelines, Sade Sati conditions,
-   and structured validation fixtures.
+4. Panchang, Muhurta, and transit primitives: complete. This includes Bhava
+   Chalit, Yogini, Ashtottari, Panchanga elements and endpoints, daily time
+   windows, ingress/station/event timelines, Sade Sati conditions, and
+   structured validation fixtures.
 
 ## Next phases
 
-5. Advanced calculations: aspects, Shadbala, Ashtakavarga, objective yoga and
+5. Advanced calculations: extended vargas D5/D6/D8/D11, aspects, Shadbala, Ashtakavarga, objective yoga and
    dosha detectors, matching facts, and birth-time sensitivity.
 6. Release readiness: documentation review, reproducible Docker build, CI,
    licence audit, examples, and release notes.
@@ -30,4 +30,3 @@ matrix entry before it is marked complete.
 No phase adds a website, mobile app, REST/API server, AI, interpretation,
 prediction prose, authentication, payments, persistence, or external
 astrology API dependency.
-

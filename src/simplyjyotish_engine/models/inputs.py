@@ -69,3 +69,55 @@ class BirthDetails(BaseModel):
 
     def local_datetime(self) -> datetime:
         return datetime.combine(self.date_of_birth, self.local_time_of_birth.time())
+
+
+class LocationDate(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    date: date
+    timezone_name: str
+    latitude: float = Field(ge=-90, le=90)
+    longitude: float = Field(ge=-180, le=180)
+    settings: CalculationSettings = Field(default_factory=CalculationSettings)
+
+    @field_validator("timezone_name")
+    @classmethod
+    def validate_timezone(cls, value: str) -> str:
+        resolve_timezone(value)
+        return value
+
+
+class TransitRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    start_date: date
+    end_date: date
+    timezone_name: str
+    latitude: float = Field(ge=-90, le=90)
+    longitude: float = Field(ge=-180, le=180)
+    planets: tuple[str, ...] = (
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars",
+        "jupiter",
+        "saturn",
+        "rahu",
+        "ketu",
+    )
+    settings: CalculationSettings = Field(default_factory=CalculationSettings)
+
+    @field_validator("timezone_name")
+    @classmethod
+    def validate_timezone(cls, value: str) -> str:
+        resolve_timezone(value)
+        return value
+
+    @field_validator("end_date")
+    @classmethod
+    def validate_date_order(cls, value: date, info: object) -> date:
+        start = getattr(info, "data", {}).get("start_date")
+        if start is not None and value < start:
+            raise ValueError("end_date must not precede start_date")
+        return value

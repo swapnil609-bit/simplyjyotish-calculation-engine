@@ -14,9 +14,12 @@
 | D60 sign placement and named-amsha sequence | implemented and tested; not yet reviewed by a practicing Jyotishi |
 | Vimshottari through Prana (depth-selectable) | implemented and tested when dependency is installed |
 | Extended vargas D5/D6/D8/D11 | planned as separately versioned non-Shodashavarga conventions |
-| Bhava Chalit chart | planned; current Charts/Dashas gap to complete first |
-| Yogini and Ashtottari dasha families | planned; current Charts/Dashas gap to complete first |
-| Panchang, Muhurta, transits, ingress/station events | planned for current phase |
-| Sade Sati and deterministic transit conditions | planned for current phase |
-| Sunrise/sunset/moonrise/moonset and daily time windows | planned for current phase |
+| Equal-from-Ascendant Bhava Chalit chart | implemented and boundary-tested; expert convention review required |
+| Yogini dasha through selectable nested depth | implemented and regression-tested; expert convention review required |
+| Ashtottari dasha through selectable nested depth | implemented with conservative eligibility gate; expert convention review required |
+| Panchanga tithi/nakshatra/yoga/karana with start/end boundaries | implemented and regression-tested; tradition review required |
+| Sunrise, sunset, moonrise, moonset | implemented through Swiss Ephemeris; polar no-event cases are explicit |
+| Muhurta primitives: Rahu Kaal, Yamaganda, Gulika Kaal, Abhijit, Hora, daytime Choghadiya | implemented with versioned daytime defaults; expert convention review required |
+| Transit snapshots, ingress and retrograde station events | implemented with configurable sample grid and boundary bisection |
+| Sade Sati three-sign Saturn condition | implemented as deterministic condition flags; no interpretation |
 | Interpretation, prediction, UI, REST/API server, persistence, accounts | intentionally excluded |

@@ -26,3 +26,7 @@ def julian_day(instant_utc: datetime) -> float:
         raise CalculationError("Julian Day input must be timezone-aware")
     value = instant_utc.astimezone(UTC)
     return JULIAN_DAY_UNIX_EPOCH + value.timestamp() / 86400.0
+
+
+def datetime_from_julian_day(value: float) -> datetime:
+    return datetime.fromtimestamp((value - JULIAN_DAY_UNIX_EPOCH) * 86400.0, tz=UTC)

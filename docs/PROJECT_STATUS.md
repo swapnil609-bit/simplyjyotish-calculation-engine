@@ -15,15 +15,17 @@ Last approved commit: `7dec915`
 
 ## Gaps identified for this phase
 
-- Bhava Chalit output contract and tests are not yet implemented.
-- Vimshottari is the only dasha family currently implemented; Yogini and
-  Ashtottari are the next conservative, explicitly versioned additions.
-- Panchang, Muhurta, transit events, ingress/station timelines, and daily
-  auspicious/avoidance windows are not yet implemented.
+- Bhava Chalit, Yogini, and Ashtottari are implemented in the current phase.
+- These features carry explicit expert-review status because house-boundary,
+  dasha applicability, and tradition-specific subperiod conventions vary.
+- Panchanga elements and start/end endpoints are implemented.
+- Sunrise/sunset/moonrise/moonset, Rahu Kaal, Yamaganda, Gulika Kaal,
+  Abhijit, Hora, and daytime Choghadiya are implemented.
+- Transit snapshots, ingress/station timelines, and deterministic Sade Sati
+  condition flags are implemented.
 
 ## Validation posture
 
 Every new result will include the existing provenance plus method/version
 metadata, warnings, boundary behavior, and an `explain_calculation` object.
 No calculated fact will be converted into interpretation or prediction text.
-

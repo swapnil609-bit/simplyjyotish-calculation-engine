@@ -8,6 +8,7 @@
 | Swiss Ephemeris planetary positions | implemented and tested when dependency is installed |
 | Sidereal/tropical and true/mean node settings | implemented and tested when dependency is installed |
 | CLI chart smoke command | implemented and tested when dependency is installed |
+| Ascendant, whole-sign houses, signs, nakshatras, padas | implemented and tested when dependency is installed |
+| Planetary dignity, retrograde and combustion facts | implemented and tested when dependency is installed |
 | Houses, nakshatra, varga, dashas, Panchang, transits, strengths, yogas, matching | planned |
 | Interpretation, prediction, UI, REST/API server, persistence, accounts | intentionally excluded |
-

@@ -13,3 +13,9 @@ Milestone 1 exposes astronomical longitude, latitude, distance, speed, and
 retrograde status. Boundary-sensitive classifications must use precise values
 and must not apply presentation rounding before classification.
 
+Milestone 2 uses 27 equal nakshatras of 13°20' and four equal padas. Whole-sign
+planet houses are assigned from the sidereal ascendant sign; Swiss Ephemeris
+house cusps are retained as provenance data. Initial combustion thresholds are
+Moon 12°, Mars 17°, Mercury 14°, Jupiter 11°, Venus 10°, and Saturn 15° from
+the Sun; these are calculation defaults and require tradition-specific review.
+Cazimi is flagged at an absolute separation of 1° or less.

@@ -12,7 +12,9 @@ math.
 
 ## Development
 
-Python 3.12+ and `uv` are recommended. Install with `uv sync --extra dev`,
+Python 3.12+ and `uv` are recommended. On Windows, `pyswisseph` may require
+MSVC Build Tools because its current release may not provide a Python 3.12
+wheel. Install with `uv sync --extra dev`,
 then run `uv run pytest` and `uv run simplyjyotish --help`. Swiss Ephemeris
 data can be supplied with `SE_EPHE_PATH`; the engine reports its selected
 ephemeris mode in every result.
@@ -21,4 +23,3 @@ The project is AGPL-3.0-or-later. Read `LICENSING_STRATEGY.md` before using
 Swiss Ephemeris in proprietary software. Astronomical precision does not make
 life predictions scientifically certain; this project returns calculations,
 not conclusions about a person's life.
-

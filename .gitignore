@@ -8,9 +8,9 @@ dist/
 build/
 *.egg-info/
 .venv/
+.venv*/
 .env
 *.py[cod]
 *.swe
 *.se1
 *.eph
-

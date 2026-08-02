@@ -36,6 +36,8 @@ class DashaTimeline(BaseModel):
     provenance: Provenance
     periods: list[DashaPeriod]
     warnings: list[str] = Field(default_factory=list)
+    eligibility: str = "not_applicable"
+    validation_status: str = "implemented_requires_expert_review"
 
     def active_at(self, instant: datetime) -> list[DashaPeriod]:
         return sorted(

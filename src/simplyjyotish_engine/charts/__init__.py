@@ -1,1 +1,1 @@
-
+"""Chart calculation modules."""

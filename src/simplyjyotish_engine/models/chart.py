@@ -70,3 +70,26 @@ class BirthChart(BaseModel):
     planets: list[PlanetChartFact]
     warnings: list[str] = Field(default_factory=list)
     explain_calculation: dict[str, str]
+
+
+class BhavaChalitPlacement(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    object_name: str
+    longitude: LongitudeValue
+    house: int = Field(ge=1, le=12)
+    cusp_house: int = Field(ge=1, le=12)
+    boundary_distance_degrees: float = Field(ge=0, lt=30)
+
+
+class BhavaChalitChart(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    provenance: Provenance
+    method_id: str
+    method: str
+    ascendant: LongitudeValue
+    cusps: list[HouseFact]
+    placements: list[BhavaChalitPlacement]
+    warnings: list[str] = Field(default_factory=list)
+    explain_calculation: dict[str, str]

@@ -1,0 +1,39 @@
+{
+  "contract_version": "1.0.0",
+  "engine_version": "0.1.0-alpha",
+  "calculation_standard_version": "1.0.0",
+  "convention_manifest": {
+    "methodology_id": "simplyjyotish_engine_v1",
+    "zodiac": "sidereal",
+    "ayanamsha_id": "lahiri",
+    "house_assignment": "whole_sign_from_ascendant_v1",
+    "node_type": "true",
+    "vimshottari_year_basis": "365.25_days",
+    "divisional_chart_conventions": {
+      "D1": "rashi_whole_sign_v1",
+      "D9": "parashara_bphs_chapter_6_v1",
+      "D10": "parashara_bphs_chapter_6_v1"
+    },
+    "engine_version": "0.1.0-alpha",
+    "contract_version": "1.0.0",
+    "ephemeris_version": "2.10.03"
+  },
+  "provenance": {
+    "engine_version": "0.1.0-alpha",
+    "calculation_standard_version": "1.0.0",
+    "output_schema_version": "1.0.0",
+    "ephemeris_mode": "swiss_ephemeris",
+    "ephemeris_file_version_when_known": "2.10.03",
+    "ayanamsa": "lahiri",
+    "node_type": "true",
+    "zodiac": "sidereal",
+    "source_input_timezone": "Asia/Kolkata",
+    "resolved_utc": "1990-01-01T07:00:15Z",
+    "latitude": 17.385,
+    "longitude": 78.4867
+  },
+  "calculation": {
+    "status": "success",
+    "warnings": []
+  }
+}

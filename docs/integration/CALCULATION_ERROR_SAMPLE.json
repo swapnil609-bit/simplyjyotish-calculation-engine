@@ -1,0 +1,20 @@
+{
+  "contract_version": "1.0.0",
+  "engine_version": "0.1.0-alpha",
+  "calculation_standard_version": "1.0.0",
+  "convention_manifest": null,
+  "calculation": null,
+  "error": {
+    "type": "validation_error",
+    "code": "invalid_timezone",
+    "message": "timezone_name must be a resolvable IANA timezone",
+    "field_errors": [
+      {
+        "field": "timezone_name",
+        "reason": "unknown_timezone",
+        "input": "Not/A_Timezone"
+      }
+    ]
+  },
+  "warnings": []
+}

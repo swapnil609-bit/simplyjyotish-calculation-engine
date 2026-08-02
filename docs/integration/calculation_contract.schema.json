@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/swapnil609-bit/simplyjyotish-calculation-engine/blob/master/docs/integration/calculation_contract.schema.json",
+  "title": "SimplyJyotish Rule Engine Calculation Contract",
+  "description": "Versioned adapter envelope for deterministic calculation facts.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/successResponse" },
+    { "$ref": "#/$defs/errorResponse" }
+  ],
+  "$defs": {
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "methodology_id", "zodiac", "ayanamsha_id", "house_assignment",
+        "node_type", "vimshottari_year_basis", "divisional_chart_conventions",
+        "engine_version", "contract_version", "ephemeris_version"
+      ],
+      "properties": {
+        "methodology_id": { "type": "string", "minLength": 1 },
+        "zodiac": { "enum": ["sidereal", "tropical"] },
+        "ayanamsha_id": { "enum": ["lahiri", "raman", "krishnamurti", "yukteshwar", "fagan_bradley"] },
+        "house_assignment": { "type": "string", "minLength": 1 },
+        "node_type": { "enum": ["true", "mean"] },
+        "vimshottari_year_basis": { "type": "string", "minLength": 1 },
+        "divisional_chart_conventions": {
+          "type": "object",
+          "required": ["D1", "D9", "D10"],
+          "additionalProperties": { "type": "string", "minLength": 1 },
+          "properties": {
+            "D1": { "type": "string" },
+            "D9": { "type": "string" },
+            "D10": { "type": "string" }
+          }
+        },
+        "engine_version": { "type": "string" },
+        "contract_version": { "const": "1.0.0" },
+        "ephemeris_version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine_version", "calculation_standard_version", "output_schema_version",
+        "ephemeris_mode", "ayanamsa", "node_type", "zodiac", "source_input_timezone",
+        "resolved_utc", "latitude", "longitude"
+      ],
+      "properties": {
+        "engine_version": { "type": "string" },
+        "calculation_standard_version": { "type": "string" },
+        "output_schema_version": { "const": "1.0.0" },
+        "ephemeris_mode": { "type": "string" },
+        "ephemeris_file_version_when_known": { "type": ["string", "null"] },
+        "ayanamsa": { "enum": ["lahiri", "raman", "krishnamurti", "yukteshwar", "fagan_bradley"] },
+        "node_type": { "enum": ["true", "mean"] },
+        "zodiac": { "enum": ["sidereal", "tropical"] },
+        "source_input_timezone": { "type": "string" },
+        "resolved_utc": { "type": "string", "format": "date-time" },
+        "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+        "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "validationStatus": {
+      "type": "object",
+      "required": ["release_status", "implemented", "unit_tested", "source_verified", "cross_implementation_verified", "expert_reviewed"],
+      "properties": {
+        "release_status": { "enum": ["stable", "provisional", "experimental", "excluded_from_default"] },
+        "implemented": { "type": "boolean" },
+        "unit_tested": { "type": "boolean" },
+        "source_verified": { "type": "boolean" },
+        "cross_implementation_verified": { "type": "boolean" },
+        "expert_reviewed": { "type": "boolean" },
+        "source_reference_ids": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "successResponse": {
+      "type": "object",
+      "required": ["contract_version", "engine_version", "calculation_standard_version", "convention_manifest", "provenance", "calculation", "warnings"],
+      "properties": {
+        "contract_version": { "const": "1.0.0" },
+        "engine_version": { "type": "string" },
+        "calculation_standard_version": { "type": "string" },
+        "convention_manifest": { "$ref": "#/$defs/manifest" },
+        "provenance": { "$ref": "#/$defs/provenance" },
+        "calculation": { "type": "object", "required": ["status"], "properties": { "status": { "const": "success" } }, "additionalProperties": true },
+        "warnings": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "errorResponse": {
+      "type": "object",
+      "required": ["contract_version", "engine_version", "calculation_standard_version", "convention_manifest", "calculation", "error", "warnings"],
+      "properties": {
+        "contract_version": { "const": "1.0.0" },
+        "engine_version": { "type": "string" },
+        "calculation_standard_version": { "type": "string" },
+        "convention_manifest": { "type": "null" },
+        "calculation": { "type": "null" },
+        "error": {
+          "type": "object",
+          "required": ["type", "code", "message", "field_errors"],
+          "properties": {
+            "type": { "enum": ["validation_error", "unsupported_feature", "calculation_error"] },
+            "code": { "type": "string" },
+            "message": { "type": "string" },
+            "field_errors": { "type": "array", "items": { "type": "object" } }
+          },
+          "additionalProperties": true
+        },
+        "warnings": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  }
+}

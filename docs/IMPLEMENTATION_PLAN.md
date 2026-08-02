@@ -22,8 +22,10 @@ matrix entry before it is marked complete.
 
 ## Next phases
 
-5. Advanced calculations: extended vargas D5/D6/D8/D11, aspects, Shadbala, Ashtakavarga, objective yoga and
-   dosha detectors, matching facts, and birth-time sensitivity.
+5. Advanced calculations: complete. This includes relationships/aspects,
+   six-component Shadbala, Ashtakavarga, and explicit extended D5/D6/D8/D11
+   methods. The next milestone is deeper validation, objective yoga/dosha
+   detectors, matching facts, and birth-time sensitivity.
 6. Release readiness: documentation review, reproducible Docker build, CI,
    licence audit, examples, and release notes.
 

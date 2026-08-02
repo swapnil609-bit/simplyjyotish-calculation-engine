@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from simplyjyotish_engine.models.chart import BirthChart
 from simplyjyotish_engine.models.varga import DivisionalChart, VargaPlanet
+from simplyjyotish_engine.vargas.extended import EXTENDED_VARGA_METHODS, calculate_extended_varga
 from simplyjyotish_engine.vargas.parashara_bphs import (
     PARASHARA_SHODASHAVARGA_SCHEME_ID,
     SPECS,
@@ -26,8 +27,15 @@ def calculate_varga(
     scheme_id: str = PARASHARA_SHODASHAVARGA_SCHEME_ID,
 ) -> DivisionalChart:
     if scheme_id != PARASHARA_SHODASHAVARGA_SCHEME_ID:
+        if division in EXTENDED_VARGA_METHODS and scheme_id == EXTENDED_VARGA_METHODS[division][0]:
+            return calculate_extended_varga(chart, division, scheme_id)
         raise ValueError(f"Unsupported varga scheme: {scheme_id}")
     if division not in SPECS:
+        if division in EXTENDED_VARGA_METHODS and scheme_id == PARASHARA_SHODASHAVARGA_SCHEME_ID:
+            raise ValueError(
+                f"D{division} is outside the default Shodashavarga baseline; "
+                f"pass scheme_id={EXTENDED_VARGA_METHODS[division][0]} explicitly"
+            )
         raise ValueError(
             "Default Parashari Shodashavarga supports D1, D2, D3, D4, D7, D9, D10, D12, "
             "D16, D20, D24, D27, D30, D40, D45, and D60"

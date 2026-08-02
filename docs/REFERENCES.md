@@ -21,6 +21,16 @@
 - Swiss Ephemeris `rise_trans`, `calc_ut`, and planetary-event documentation
   are the primary astronomical calculation references for daily and transit
   event timing.
+- Brihat Parashara Hora Shastra, Chapter 26, *Shadbaladhyaya*, is the primary
+  convention reference for the six strength components; PyJHora
+  `horoscope/chart/strength.py` is a pinned comparison source.
+- Brihat Parashara Hora Shastra, Chapter 12, *Ashtakavarga*, is the primary
+  convention reference; PyJHora `horoscope/chart/ashtakavarga.py` is the
+  pinned comparison source for tables and shodhana mechanics.
+- Classical Graha Drishti, Jaimini Rashi Drishti, and Parivartana conventions
+  are represented by explicit method identifiers in
+  `docs/ADVANCED_CALCULATIONS_CONVENTIONS.md`; conflicting traditions are not
+  silently merged.
 
 Classical Jyotish conventions will be added beside the relevant module only
 when the exact tradition and implementation rule are specified.

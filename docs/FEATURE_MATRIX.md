@@ -10,5 +10,7 @@
 | CLI chart smoke command | implemented and tested when dependency is installed |
 | Ascendant, whole-sign houses, signs, nakshatras, padas | implemented and tested when dependency is installed |
 | Planetary dignity, retrograde and combustion facts | implemented and tested when dependency is installed |
+| D1/D9/D10/D60 varga framework | implemented and tested when dependency is installed |
+| Vimshottari Mahadasha and Antardasha timeline | implemented and tested when dependency is installed |
 | Houses, nakshatra, varga, dashas, Panchang, transits, strengths, yogas, matching | planned |
 | Interpretation, prediction, UI, REST/API server, persistence, accounts | intentionally excluded |

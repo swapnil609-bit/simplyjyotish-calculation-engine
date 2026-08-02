@@ -19,3 +19,8 @@ house cusps are retained as provenance data. Initial combustion thresholds are
 Moon 12°, Mars 17°, Mercury 14°, Jupiter 11°, Venus 10°, and Saturn 15° from
 the Sun; these are calculation defaults and require tradition-specific review.
 Cazimi is flagged at an absolute separation of 1° or less.
+
+Milestone 3 uses the documented Parashari mappings for D1, D9, D10, and D60.
+Vimshottari uses the Moon's sidereal nakshatra lord, proportional first-period
+balance, nested Antardasha periods, and a fixed 365.25-day dasha year. These
+conventions are versioned and must not be changed silently.

@@ -14,5 +14,9 @@
 | D60 sign placement and named-amsha sequence | implemented and tested; not yet reviewed by a practicing Jyotishi |
 | Vimshottari through Prana (depth-selectable) | implemented and tested when dependency is installed |
 | Extended vargas D5/D6/D8/D11 | planned as separately versioned non-Shodashavarga conventions |
-| Houses, Panchang, transits, strengths, yogas, matching | planned |
+| Bhava Chalit chart | planned; current Charts/Dashas gap to complete first |
+| Yogini and Ashtottari dasha families | planned; current Charts/Dashas gap to complete first |
+| Panchang, Muhurta, transits, ingress/station events | planned for current phase |
+| Sade Sati and deterministic transit conditions | planned for current phase |
+| Sunrise/sunset/moonrise/moonset and daily time windows | planned for current phase |
 | Interpretation, prediction, UI, REST/API server, persistence, accounts | intentionally excluded |

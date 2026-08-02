@@ -6,7 +6,9 @@
   conventions, limitations, guide, samples, and JSON Schema.
 - Existing local commit pushed before handoff: `b4bcd2d`.
 - Existing tag `v0.1.0-alpha`: unchanged; no new tag created.
-- Follow-up handoff commit: `ef47227` (`docs: add Rule Engine integration handoff`).
+- Follow-up handoff content commit: `7f8d244` (`docs: add Rule Engine integration handoff`).
+- This checkpoint update is a separate documentation-only commit immediately
+  after the handoff content commit.
 - Contract version: `1.0.0`.
 - Engine version: `0.1.0-alpha`.
 - Node convention: configurable `true` or `mean`; current default is `true`,

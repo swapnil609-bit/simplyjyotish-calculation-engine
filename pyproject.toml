@@ -49,3 +49,4 @@ python_version = "3.12"
 strict = true
 files = ["src/simplyjyotish_engine"]
 mypy_path = ["src"]
+ignore_missing_imports = true

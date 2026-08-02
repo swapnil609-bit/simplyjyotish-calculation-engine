@@ -6,9 +6,9 @@ from typing import Any
 from simplyjyotish_engine.core.errors import DependencyUnavailableError
 
 try:
-    import swisseph as swe
+    import swisseph as swe  # type: ignore[import-not-found]
 except ImportError:  # pragma: no cover - exercised in environments without optional install
-    swe = None  # type: ignore[assignment]
+    swe: Any = None
 
 
 PLANETS: dict[str, int] = {

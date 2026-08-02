@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from simplyjyotish_engine.astronomy.ephemeris import PLANETS, require_swiss_ephemeris
 from simplyjyotish_engine.core.time import julian_day, to_utc
 from simplyjyotish_engine.models.inputs import Ayanamsa, BirthDetails, CalculationSettings, NodeType
@@ -25,7 +27,7 @@ def _dms(degrees: float) -> str:
     return f"{whole:03d}°{minutes:02d}'{seconds:06.3f}\""
 
 
-def _flags(settings: CalculationSettings, swe: object) -> int:
+def _flags(settings: CalculationSettings, swe: Any) -> int:
     flags = swe.FLG_SWIEPH | swe.FLG_SPEED
     if settings.zodiac.value == "sidereal":
         flags |= swe.FLG_SIDEREAL

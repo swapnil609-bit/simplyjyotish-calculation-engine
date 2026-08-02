@@ -9,5 +9,6 @@
   identifier.
 - Migration notes are required for removed/renamed fields, unit changes,
   default changes and convention changes.
-- Release tags and publication require explicit owner approval; this milestone
-  creates no tag, push or public release.
+- Release tags and publication require explicit owner approval. The published
+  `v0.1.0-alpha` tag is immutable; fixes and documentation corrections use a
+  new versioned tag.

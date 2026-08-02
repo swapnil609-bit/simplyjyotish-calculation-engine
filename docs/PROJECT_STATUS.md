@@ -1,9 +1,11 @@
 # Project status
 
-Status date: 2026-08-02  
-Runtime: Python 3.12.10  
+Status date: 2026-08-02
+Runtime: Python 3.12.10
 Accepted baseline commit: `5d64904`
-Current milestone: Reference Reconciliation and v0.1.0-alpha release candidate
+Published release commit: `1082917`
+Published tag: `v0.1.0-alpha`
+Current milestone: Post-release validation hardening
 
 ## Scope completed in this milestone
 
@@ -22,9 +24,9 @@ Current milestone: Reference Reconciliation and v0.1.0-alpha release candidate
 
 ## Validation status
 
-Full verification run: 455 pytest tests passed, Ruff passed, and mypy passed.
+Full verification run: 458 pytest tests passed, Ruff passed, and mypy passed.
 
-The local release candidate uses package version `0.1.0a0`, engine version
+The published alpha uses package version `0.1.0a0`, engine version
 `0.1.0-alpha`, and output schema version `1.0.0`. Release classifications are
 documented in `SUPPORTED_FEATURES.md`; advanced discrepancy-registered
 families are not stable defaults.
@@ -50,7 +52,7 @@ accounts, payments, or external astrology API dependency.
 
 ## Release assessment
 
-The local alpha release candidate is technically testable and reproducible but
-not parity-complete or expert-reviewed for the discrepancy-registered families.
-It is ready for local/public GitHub review only after owner approval; it has
-not been tagged, published or pushed.
+The public alpha is technically testable and reproducible but not
+parity-complete or expert-reviewed for the discrepancy-registered families.
+It is published on GitHub as a prerelease only; it has not been published to
+PyPI and is not production-certified.

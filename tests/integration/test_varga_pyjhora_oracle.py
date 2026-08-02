@@ -3,6 +3,11 @@
 from decimal import Decimal
 
 import pytest
+
+pytest.importorskip(
+    "jhora",
+    reason="PyJHora 4.8.7 is an optional validation-only dependency",
+)
 from jhora.horoscope.chart import charts
 
 from simplyjyotish_engine.vargas.parashara_bphs import (

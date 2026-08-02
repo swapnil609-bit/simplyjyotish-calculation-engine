@@ -31,6 +31,6 @@ Swiss Ephemeris in proprietary software. Astronomical precision does not make
 life predictions scientifically certain; this project returns calculations,
 not conclusions about a person's life.
 
-The local alpha release classification and limitations are in
+The public alpha release classification and limitations are in
 `RELEASE_READINESS.md`, `SUPPORTED_FEATURES.md`, `KNOWN_LIMITATIONS.md`, and
 `VALIDATION_REPORT.md`.

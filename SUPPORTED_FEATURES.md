@@ -26,6 +26,9 @@ Shadbala and Bhava Bala, Ishta/Kashta, Vimsopaka, D5/D6/D8/D11, special
 Lagnas, Upagrahas, Avasthas, Pushkara/Vargottama/Vaiseshikamsa and related
 convention-sensitive primitives.
 
+Experimental features are disabled by default and must be selected explicitly
+by the consumer together with their method or convention identifier.
+
 ## Excluded from default
 
 Alternative divisional methods and non-default Bhava/Muhurta conventions are

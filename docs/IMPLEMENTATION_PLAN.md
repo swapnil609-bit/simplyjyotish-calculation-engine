@@ -20,14 +20,15 @@ matrix entry before it is marked complete.
    windows, ingress/station/event timelines, Sade Sati conditions, and
    structured validation fixtures.
 
-## Next phases
+## Post-release hardening
 
-5. Advanced calculations: complete. This includes relationships/aspects,
-   six-component Shadbala, Ashtakavarga, and explicit extended D5/D6/D8/D11
-   methods. The next milestone is deeper validation, objective yoga/dosha
-   detectors, matching facts, and birth-time sensitivity.
-6. Release readiness: documentation review, reproducible Docker build, CI,
-   licence audit, examples, and release notes.
+5. Post-release hardening: continue independent reference reconciliation,
+   optional-reference test isolation, boundary/regression coverage, and
+   documentation maintenance. No new calculation family is promoted without
+   independent source evidence and an explicit validation status.
+6. Future release: only after the discrepancy register, expert-review items,
+   and reproducible release checks are reassessed. The alpha tag is immutable;
+   fixes use a new versioned tag.
 
 No phase adds a website, mobile app, REST/API server, AI, interpretation,
 prediction prose, authentication, payments, persistence, or external

@@ -25,4 +25,10 @@
 | Vedic aspects and relationships | implemented: Graha Drishti, Jaimini Rashi Drishti, conjunctions, dispositorship, exchanges, Yuddha, Papakartari |
 | Shadbala and Bhava Bala | implemented with six component outputs, Ishta/Kashta, and Vimsopaka fields; expert review pending |
 | Ashtakavarga | implemented: BAV, PAV, SAV, Trikona/Ekadhipatya Shodhana, Shodhya Pinda; expert review pending |
+| Independent validation catalog | implemented for pinned source metadata; component-level and period-level fixture extraction remains pending |
+| Objective Yoga detectors | implemented as fact-only versioned detections; cross-implementation and expert review pending |
+| Objective Dosha and condition detectors | implemented with raw conditions separated from exceptions/weakening factors; Mrityu Bhaga intentionally unavailable |
+| Birth-time sensitivity analysis | implemented for configured sampled ranges, Lagna/house/Nakshatra-Pada/D9/D10/D60 and birth-start Vimshottari boundary changes |
+| Arudha, Bhava Padas, Upapada, Hora/Ghati/Bhava Lagna | implemented with explicit convention identifiers; expert review pending |
+| Chara Karakas, Gulika/Mandi, Upagrahas, Pushkara/Vargottama/Vaiseshikamsa, Avasthas | implemented with explicit conventions; expert/source review pending |
 | Interpretation, prediction, UI, REST/API server, persistence, accounts | intentionally excluded |

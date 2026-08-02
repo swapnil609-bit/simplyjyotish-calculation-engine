@@ -38,3 +38,31 @@ by the `parashara_bphs_chapter_6_v1` default. Current identifiers are:
 - `ekadashamsha_parashari_alt_v1`
 
 These are deliberately marked source-unverified and expert-review pending.
+
+## Objective yogas and conditions
+
+`classical_objective_yogas_parashari_v1` detects only geometric and lordship
+conditions: Mahapurusha, Gaja Kesari, Budhaditya, Chandra-Mangala, Adhi, Amala,
+Sunapha/Anapha/Durudhara, Kemadruma with separate cancellation factors,
+Parivartana classifications, a conservative Neecha Bhanga rule, configurable
+lord-connection families, and a precise Chatussagara Nabhasa pattern. It does
+not assert life outcomes. `objective_doshas_and_conditions_v1` keeps raw
+Manglik, Kala Sarpa, Grahan, node conjunction, combustion, debilitation,
+Papakartari, Gandanta, and unavailable Mrityu Bhaga status separate from
+exceptions and severity metadata.
+
+## Sensitivity and special points
+
+`birth_time_sensitivity_discrete_sampling_v1` samples a user-selected local
+time range and records Lagna, house-sign, Nakshatra/Pada, D9/D10/D60 and the
+birth-start Vimshottari boundary changes. It is a sensitivity report, not
+rectification. Arudha/Upapada, Bhava Padas, Hora/Ghati/Bhava Lagna, Gulika,
+Mandi, solar Upagrahas, Chara Karakas, and Avasthas carry explicit convention
+identifiers. Regional and school-specific variants remain review items.
+
+## Validation flags
+
+`ValidationStatus` distinguishes source verification,
+cross-implementation verification, and expert review. New detectors currently
+have source verification but not cross-implementation or expert verification;
+this is intentional and reflected in JSON.

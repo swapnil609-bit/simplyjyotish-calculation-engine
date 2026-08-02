@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field
 
 from simplyjyotish_engine.models.outputs import Provenance
+from simplyjyotish_engine.models.validation import ValidationStatus
 
 
 class AspectFact(BaseModel):
@@ -84,6 +85,7 @@ class RelationshipResult(BaseModel):
     papakartari: list[PapakartariFact]
     warnings: list[str] = Field(default_factory=list)
     explain_calculation: dict[str, str]
+    validation_status: ValidationStatus = Field(default_factory=ValidationStatus)
 
 
 class StrengthComponent(BaseModel):
@@ -126,6 +128,7 @@ class ShadbalaResult(BaseModel):
     bhava_bala: list[BhavaStrength]
     warnings: list[str] = Field(default_factory=list)
     explain_calculation: dict[str, str]
+    validation_status: ValidationStatus = Field(default_factory=ValidationStatus)
 
 
 class AshtakavargaResult(BaseModel):
@@ -143,3 +146,4 @@ class AshtakavargaResult(BaseModel):
     validation_status: str = "implemented_requires_expert_review"
     warnings: list[str] = Field(default_factory=list)
     explain_calculation: dict[str, str]
+    validation_detail: ValidationStatus = Field(default_factory=ValidationStatus)

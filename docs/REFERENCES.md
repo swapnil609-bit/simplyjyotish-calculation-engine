@@ -31,6 +31,10 @@
   are represented by explicit method identifiers in
   `docs/ADVANCED_CALCULATIONS_CONVENTIONS.md`; conflicting traditions are not
   silently merged.
+- Classical yoga and condition definitions are represented as source-reference
+  identifiers in the fact detectors. The current independent comparison
+  catalog is `tests/fixtures/validation_reference_catalog.json`; edition,
+  settings, tolerance, and verification flags are stored with each record.
 
 Classical Jyotish conventions will be added beside the relevant module only
 when the exact tradition and implementation rule are specified.

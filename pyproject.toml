@@ -47,4 +47,5 @@ select = ["E", "F", "I", "B", "UP"]
 [tool.mypy]
 python_version = "3.12"
 strict = true
-packages = ["simplyjyotish_engine"]
+files = ["src/simplyjyotish_engine"]
+mypy_path = ["src"]

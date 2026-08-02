@@ -6,9 +6,9 @@ from typing import Any
 from simplyjyotish_engine.core.errors import DependencyUnavailableError
 
 try:
-    import swisseph as swe  # type: ignore[import-not-found]
+    import swisseph as swiss
 except ImportError:  # pragma: no cover - exercised in environments without optional install
-    swe: Any = None
+    swiss: Any = None
 
 
 PLANETS: dict[str, int] = {
@@ -28,9 +28,9 @@ PLANETS: dict[str, int] = {
 
 
 def require_swiss_ephemeris() -> Any:
-    if swe is None:
+    if swiss is None:
         raise DependencyUnavailableError("pyswisseph is required for planetary calculations")
     ephe_path = os.environ.get("SE_EPHE_PATH")
     if ephe_path:
-        swe.set_ephe_path(ephe_path)
-    return swe
+        swiss.set_ephe_path(ephe_path)
+    return swiss

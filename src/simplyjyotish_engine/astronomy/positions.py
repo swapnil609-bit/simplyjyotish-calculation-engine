@@ -39,7 +39,7 @@ def _flags(settings: CalculationSettings, swe: Any) -> int:
             Ayanamsa.FAGAN_BRADLEY: swe.SIDM_FAGAN_BRADLEY,
         }
         swe.set_sid_mode(sidereal_modes[settings.ayanamsa])
-    return flags
+    return int(flags)
 
 
 def calculate_planetary_positions(birth: BirthDetails) -> PlanetaryPositionsResult:

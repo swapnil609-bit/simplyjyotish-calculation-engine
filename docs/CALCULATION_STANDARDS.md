@@ -20,7 +20,10 @@ Moon 12°, Mars 17°, Mercury 14°, Jupiter 11°, Venus 10°, and Saturn 15° fr
 the Sun; these are calculation defaults and require tradition-specific review.
 Cazimi is flagged at an absolute separation of 1° or less.
 
-Milestone 3 uses the documented Parashari mappings for D1, D9, D10, and D60.
+The default varga scheme is `parashara_bphs_chapter_6_v1`, covering the full
+BPHS Chapter 6 Shodashavarga set: D1, D2, D3, D4, D7, D9, D10, D12, D16, D20,
+D24, D27, D30, D40, D45, and D60. Each output includes source, cross-oracle,
+and expert-review statuses. See `docs/VARGA_CONVENTIONS.md`.
 Vimshottari uses the Moon's sidereal nakshatra lord, proportional first-period
 balance, a fixed 365.25-day dasha year, and depth-selectable Mahadasha,
 Antardasha, Pratyantardasha, Sookshma, and Prana timelines. Every final child

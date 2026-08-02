@@ -6,6 +6,14 @@ from simplyjyotish_engine.models.chart import SignFact
 from simplyjyotish_engine.models.outputs import Provenance
 
 
+class VargaValidationStatus(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    source_verified: bool
+    cross_implementation_verified: bool
+    expert_reviewed: bool = False
+
+
 class VargaPlanet(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -14,6 +22,10 @@ class VargaPlanet(BaseModel):
     source_sign: SignFact
     division_part: int = Field(ge=1)
     varga_sign: SignFact
+    amsha_name: str | None = None
+    amsha_deity: str | None = None
+    amsha_lord: str | None = None
+    amsha_classification: str | None = None
 
 
 class DivisionalChart(BaseModel):
@@ -21,7 +33,12 @@ class DivisionalChart(BaseModel):
 
     division: int = Field(ge=1, le=60)
     name: str
+    varga_scheme_id: str
+    source_verses: str
+    boundary_convention: str
     convention: str
+    validation_status: VargaValidationStatus
     provenance: Provenance
+    ascendant: VargaPlanet
     planets: list[VargaPlanet]
     warnings: list[str] = Field(default_factory=list)

@@ -10,7 +10,9 @@
 | CLI chart smoke command | implemented and tested when dependency is installed |
 | Ascendant, whole-sign houses, signs, nakshatras, padas | implemented and tested when dependency is installed |
 | Planetary dignity, retrograde and combustion facts | implemented and tested when dependency is installed |
-| D1/D9/D10/D60 varga framework | implemented and tested when dependency is installed |
+| BPHS Chapter 6 Parashari Shodashavarga (D1/D2/D3/D4/D7/D9/D10/D12/D16/D20/D24/D27/D30/D40/D45/D60) | implemented and tested |
+| D60 sign placement and named-amsha sequence | implemented and tested; not yet reviewed by a practicing Jyotishi |
 | Vimshottari through Prana (depth-selectable) | implemented and tested when dependency is installed |
-| Houses, nakshatra, varga, dashas, Panchang, transits, strengths, yogas, matching | planned |
+| Extended vargas D5/D6/D8/D11 | planned as separately versioned non-Shodashavarga conventions |
+| Houses, Panchang, transits, strengths, yogas, matching | planned |
 | Interpretation, prediction, UI, REST/API server, persistence, accounts | intentionally excluded |

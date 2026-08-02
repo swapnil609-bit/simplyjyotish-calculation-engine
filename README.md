@@ -19,6 +19,11 @@ then run `uv run pytest` and `uv run simplyjyotish --help`. Swiss Ephemeris
 data can be supplied with `SE_EPHE_PATH`; the engine reports its selected
 ephemeris mode in every result.
 
+The default divisional-chart scheme is the documented BPHS Chapter 6 Parashari
+Shodashavarga baseline. Its conventions, source references, and validation
+evidence are in `docs/VARGA_CONVENTIONS.md` and
+`docs/SHODASHAVARGA_REVIEW_PACKAGE.md`.
+
 The project is AGPL-3.0-or-later. Read `LICENSING_STRATEGY.md` before using
 Swiss Ephemeris in proprietary software. Astronomical precision does not make
 life predictions scientifically certain; this project returns calculations,

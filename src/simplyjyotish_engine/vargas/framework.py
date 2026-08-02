@@ -1,55 +1,70 @@
 from __future__ import annotations
 
+from decimal import Decimal
+
 from simplyjyotish_engine.models.chart import BirthChart
 from simplyjyotish_engine.models.varga import DivisionalChart, VargaPlanet
-from simplyjyotish_engine.vedic.reference import sign_fact, sign_index
-
-DIVISION_NAMES = {1: "Rashi", 9: "Navamsha", 10: "Dashamsha", 60: "Shashtiamsha"}
-
-
-def _varga_sign(source_sign: int, part: int, division: int) -> int:
-    if division == 1:
-        return source_sign
-    if division == 9:
-        # Movable signs begin at themselves, fixed signs at the 9th sign,
-        # and dual signs at the 5th sign.
-        modality = ("movable", "fixed", "dual")[source_sign % 3]
-        start_offset = {"movable": 0, "fixed": 8, "dual": 4}[modality]
-        return (source_sign + start_offset + part - 1) % 12
-    if division == 10:
-        # Parashara Dashamsha: odd signs count from themselves; even signs
-        # count from the 9th sign.
-        start_offset = 0 if source_sign % 2 == 0 else 8
-        return (source_sign + start_offset + part - 1) % 12
-    if division == 60:
-        # Common Parashari Shashtiamsha sign convention: forward for odd
-        # signs and reverse for even signs. Names are intentionally deferred.
-        direction = 1 if source_sign % 2 == 0 else -1
-        return (source_sign + direction * (part - 1)) % 12
-    raise ValueError(f"Unsupported validated varga division: D{division}")
+from simplyjyotish_engine.vargas.parashara_bphs import (
+    PARASHARA_SHODASHAVARGA_SCHEME_ID,
+    SPECS,
+    calculate_placement,
+    d60_name,
+    validation_status,
+)
+from simplyjyotish_engine.vedic.reference import sign_fact
 
 
-def calculate_varga(chart: BirthChart, division: int) -> DivisionalChart:
-    if division not in DIVISION_NAMES:
-        raise ValueError("Milestone 3 supports divisions D1, D9, D10, and D60")
-    planets: list[VargaPlanet] = []
-    for planet in chart.planets:
-        longitude = planet.position.longitude.decimal_degrees
-        source_sign = sign_index(longitude)
-        part = min(division, int((longitude % 30.0) / (30.0 / division)) + 1)
-        planets.append(
-            VargaPlanet(
-                planet=planet.position.planet,
-                source_longitude_degrees=longitude,
-                source_sign=sign_fact(source_sign),
-                division_part=part,
-                varga_sign=sign_fact(_varga_sign(source_sign, part, division)),
-            )
+def _source_longitude(longitude: float) -> tuple[int, Decimal]:
+    normalized = Decimal(str(longitude)) % Decimal("360")
+    source_sign = int(normalized // Decimal("30"))
+    return source_sign, normalized % Decimal("30")
+
+
+def calculate_varga(
+    chart: BirthChart,
+    division: int,
+    scheme_id: str = PARASHARA_SHODASHAVARGA_SCHEME_ID,
+) -> DivisionalChart:
+    if scheme_id != PARASHARA_SHODASHAVARGA_SCHEME_ID:
+        raise ValueError(f"Unsupported varga scheme: {scheme_id}")
+    if division not in SPECS:
+        raise ValueError(
+            "Default Parashari Shodashavarga supports D1, D2, D3, D4, D7, D9, D10, D12, "
+            "D16, D20, D24, D27, D30, D40, D45, and D60"
         )
+    spec = SPECS[division]
+
+    def to_varga_planet(planet_name: str, longitude: float) -> VargaPlanet:
+        source_sign, longitude_in_sign = _source_longitude(longitude)
+        part, varga_sign, amsha_lord = calculate_placement(source_sign, longitude_in_sign, division)
+        return VargaPlanet(
+            planet=planet_name,
+            source_longitude_degrees=longitude,
+            source_sign=sign_fact(source_sign),
+            division_part=part,
+            varga_sign=sign_fact(varga_sign),
+            amsha_name=d60_name(source_sign, part) if division == 60 else None,
+            amsha_lord=amsha_lord,
+        )
+
+    ascendant = to_varga_planet("lagna", chart.ascendant.longitude.decimal_degrees)
+    planets = [
+        to_varga_planet(planet.position.planet, planet.position.longitude.decimal_degrees)
+        for planet in chart.planets
+    ]
     return DivisionalChart(
         division=division,
-        name=DIVISION_NAMES[division],
-        convention="Parashari sign-based mapping; D60 uses forward odd/reverse even convention",
+        name=spec.name,
+        varga_scheme_id=scheme_id,
+        source_verses=spec.source_verses,
+        boundary_convention="Start-inclusive, end-exclusive; source longitudes use Decimal.",
+        convention=(
+            "Direct BPHS Chapter 6 Parashari mapping; named amsha metadata is "
+            "separate from varga sign placement."
+        ),
+        validation_status=validation_status(),
         provenance=chart.provenance,
+        ascendant=ascendant,
         planets=planets,
+        warnings=["not_yet_reviewed_by_a_practicing_jyotishi"],
     )

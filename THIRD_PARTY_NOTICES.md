@@ -17,3 +17,9 @@ The runtime dependency list is declared in `pyproject.toml`. Each dependency
 retains its own copyright and licence. Dependency metadata should be reviewed
 before every release.
 
+## Development-only validation oracle: PyJHora
+
+The optional `validation` dependency group pins PyJHora 4.8.7 (AGPL-3.0) and
+its required non-UI dependencies. It is used only to generate and verify
+independent expected values for Shodashavarga tests. No PyJHora source is
+distributed or copied into this repository.
